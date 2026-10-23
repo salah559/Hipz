@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from 'react';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Menu, X } from 'lucide-react';
+import { useEffect, useState, type FormEvent } from 'react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Menu, Pause, Play, X } from 'lucide-react';
 import './index.css';
 
 type Language = 'fr' | 'ar';
 
 const copy = {
   fr: {
-    nav: ['Accueil', 'Nos saveurs', "L'univers HIPZ", 'Galerie', 'À propos', 'Contact'],
+    nav: ['Accueil', 'Nos saveurs', "L'univers HIPZ", 'À propos', 'Contact'],
     heroEyebrow: 'Une vibe à partager',
     heroSubtitle: 'Deux saveurs. Une seule vibe.',
     discover: 'Découvrir nos saveurs',
@@ -21,15 +21,15 @@ const copy = {
     peachDescription: 'Une piste créative aux couleurs de la pêche et des instants à savourer ensemble. Texte de présentation à valider par la marque.',
     lemonAlt: 'Visuel de campagne Lemon HIPZ aux agrumes.',
     peachAlt: 'Visuel de campagne Peach HIPZ aux pêches.',
-    flavorButton: 'Voir la campagne',
+    flavorButton: 'Nous contacter',
     universeEyebrow: 'L’univers HIPZ',
     universeTitle: 'Les bons moments sont encore meilleurs entre amis.',
     universeNote: 'Une expression de campagne, pas un récit historique.',
-    galleryEyebrow: 'Images de campagne',
-    galleryTitle: 'Une vibe. En images.',
-    galleryText: 'Des visuels de campagne, des produits et des moments HIPZ réunis en images.',
-    galleryCaption: 'Visuel HIPZ',
-    openImage: 'Ouvrir le visuel de campagne',
+    backgroundControls: 'Commandes des fonds de campagne',
+    backgroundPrevious: 'Image de fond précédente',
+    backgroundNext: 'Image de fond suivante',
+    backgroundPause: 'Mettre le changement de fond en pause',
+    backgroundPlay: 'Reprendre le changement de fond',
     aboutEyebrow: 'À propos',
     aboutTitle: 'HIPZ, à découvrir.',
     aboutCopy: 'Un espace pour raconter HIPZ — Dima S7ab, ses deux saveurs et les moments qu’elles inspirent.',
@@ -54,15 +54,11 @@ const copy = {
     demoError: 'Vérifiez les champs indiqués avant de continuer.',
     footerLabel: 'Le goût des moments partagés.',
     copyright: '© HIPZ — contenu éditable, informations officielles à confirmer.',
-    close: 'Fermer le visuel',
-    previous: 'Visuel précédent',
-    next: 'Visuel suivant',
     skip: 'Passer au contenu',
     language: 'العربية',
-    alt: 'Collage de campagne HIPZ complet : bouteilles Lemon et Peach, visuels fruités et scènes de campagne.',
   },
   ar: {
-    nav: ['الرئيسية', 'نكهاتنا', 'عالم HIPZ', 'المعرض', 'من نحن', 'اتصل بنا'],
+    nav: ['الرئيسية', 'نكهاتنا', 'عالم HIPZ', 'من نحن', 'اتصل بنا'],
     heroEyebrow: 'لحظات تستاهل المشاركة',
     heroSubtitle: 'نكهتان. وفايب واحد.',
     discover: 'اكتشف نكهاتنا',
@@ -77,15 +73,15 @@ const copy = {
     peachDescription: 'تصوّر إبداعي بألوان الخوخ ولحظات نستمتع بها معًا. نصّ تقديمي بانتظار موافقة العلامة.',
     lemonAlt: 'صورة حملة Lemon من HIPZ مع الحمضيات.',
     peachAlt: 'صورة حملة Peach من HIPZ مع الخوخ.',
-    flavorButton: 'شاهد الحملة',
+    flavorButton: 'تواصل معنا',
     universeEyebrow: 'عالم HIPZ',
     universeTitle: 'أحلى اللحظات تجمع الصحاب.',
     universeNote: 'عبارة إبداعية للحملة، وليست رواية تاريخية.',
-    galleryEyebrow: 'صور الحملة',
-    galleryTitle: 'فايب واحد. بصور كثيرة.',
-    galleryText: 'صور من الحملات والمنتجات ولحظات HIPZ في معرض واحد.',
-    galleryCaption: 'صورة HIPZ',
-    openImage: 'افتح صورة الحملة',
+    backgroundControls: 'التحكم في خلفيات الحملة',
+    backgroundPrevious: 'الخلفية السابقة',
+    backgroundNext: 'الخلفية التالية',
+    backgroundPause: 'إيقاف تغيير الخلفية مؤقتًا',
+    backgroundPlay: 'استئناف تغيير الخلفية',
     aboutEyebrow: 'من نحن',
     aboutTitle: 'تعرّف على HIPZ.',
     aboutCopy: 'مساحة للتعريف بـ HIPZ — dima s7ab، ونكهتيها، واللحظات التي تلهمها.',
@@ -110,12 +106,8 @@ const copy = {
     demoError: 'يرجى مراجعة الحقول المحددة قبل المتابعة.',
     footerLabel: 'نكهة اللحظات اللي تجمعنا.',
     copyright: '© HIPZ — المحتوى قابل للتعديل، والمعلومات الرسمية بانتظار التأكيد.',
-    close: 'إغلاق صورة الحملة',
-    previous: 'الصورة السابقة',
-    next: 'الصورة التالية',
     skip: 'انتقل إلى المحتوى',
     language: 'FR',
-    alt: 'كولاج حملة HIPZ كامل: عبوتا Lemon وPeach وصور الفاكهة ومشاهد الحملة.',
   },
 } as const;
 
