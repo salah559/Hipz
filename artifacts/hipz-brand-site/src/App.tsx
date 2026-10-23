@@ -19,14 +19,16 @@ const copy = {
     peachTitle: 'La douceur de la pêche.',
     lemonDescription: 'Une piste créative autour du citron, de la lumière et des moments qui pétillent. Texte de présentation à valider par la marque.',
     peachDescription: 'Une piste créative aux couleurs de la pêche et des instants à savourer ensemble. Texte de présentation à valider par la marque.',
+    lemonAlt: 'Visuel de campagne Lemon HIPZ aux agrumes.',
+    peachAlt: 'Visuel de campagne Peach HIPZ aux pêches.',
     flavorButton: 'Voir la campagne',
     universeEyebrow: 'L’univers HIPZ',
     universeTitle: 'Les bons moments sont encore meilleurs entre amis.',
     universeNote: 'Une expression de campagne, pas un récit historique.',
     galleryEyebrow: 'Images de campagne',
     galleryTitle: 'Une vibe. En images.',
-    galleryText: 'Le collage de campagne fourni, présenté dans son intégralité. Chaque panneau reste à sa place.',
-    galleryCaption: 'Campagne HIPZ — collage complet',
+    galleryText: 'Des visuels de campagne, des produits et des moments HIPZ réunis en images.',
+    galleryCaption: 'Visuel HIPZ',
     openImage: 'Ouvrir le visuel de campagne',
     aboutEyebrow: 'À propos',
     aboutTitle: 'HIPZ, à découvrir.',
@@ -53,6 +55,8 @@ const copy = {
     footerLabel: 'Le goût des moments partagés.',
     copyright: '© HIPZ — contenu éditable, informations officielles à confirmer.',
     close: 'Fermer le visuel',
+    previous: 'Visuel précédent',
+    next: 'Visuel suivant',
     skip: 'Passer au contenu',
     language: 'العربية',
     alt: 'Collage de campagne HIPZ complet : bouteilles Lemon et Peach, visuels fruités et scènes de campagne.',
@@ -71,14 +75,16 @@ const copy = {
     peachTitle: 'نعومة نكهة الخوخ.',
     lemonDescription: 'تصوّر إبداعي يحتفي بالليمون والضوء واللحظات المفعمة بالحيوية. نصّ تقديمي بانتظار موافقة العلامة.',
     peachDescription: 'تصوّر إبداعي بألوان الخوخ ولحظات نستمتع بها معًا. نصّ تقديمي بانتظار موافقة العلامة.',
+    lemonAlt: 'صورة حملة Lemon من HIPZ مع الحمضيات.',
+    peachAlt: 'صورة حملة Peach من HIPZ مع الخوخ.',
     flavorButton: 'شاهد الحملة',
     universeEyebrow: 'عالم HIPZ',
     universeTitle: 'أحلى اللحظات تجمع الصحاب.',
     universeNote: 'عبارة إبداعية للحملة، وليست رواية تاريخية.',
     galleryEyebrow: 'صور الحملة',
     galleryTitle: 'فايب واحد. بصور كثيرة.',
-    galleryText: 'الكولاج الأصلي للحملة كما تمّ توفيره، مع الحفاظ على جميع أجزائه.',
-    galleryCaption: 'حملة HIPZ — الكولاج الكامل',
+    galleryText: 'صور من الحملات والمنتجات ولحظات HIPZ في معرض واحد.',
+    galleryCaption: 'صورة HIPZ',
     openImage: 'افتح صورة الحملة',
     aboutEyebrow: 'من نحن',
     aboutTitle: 'تعرّف على HIPZ.',
@@ -105,6 +111,8 @@ const copy = {
     footerLabel: 'نكهة اللحظات اللي تجمعنا.',
     copyright: '© HIPZ — المحتوى قابل للتعديل، والمعلومات الرسمية بانتظار التأكيد.',
     close: 'إغلاق صورة الحملة',
+    previous: 'الصورة السابقة',
+    next: 'الصورة التالية',
     skip: 'انتقل إلى المحتوى',
     language: 'FR',
     alt: 'كولاج حملة HIPZ كامل: عبوتا Lemon وPeach وصور الفاكهة ومشاهد الحملة.',
@@ -113,12 +121,21 @@ const copy = {
 
 const campaignImage = '/assets/hipz-campaign-collage.png';
 const logoImage = '/assets/hipz-logo.png';
+const galleryImages = [
+  { src: '/assets/hipz-hero-wide.png', captionFr: 'Campagne — Lemon × Peach', captionAr: 'حملة — Lemon × Peach', altFr: 'Visuel large de campagne HIPZ : les deux bouteilles au milieu des agrumes et des pêches.', altAr: 'صورة حملة HIPZ عريضة: العبوتان بين الحمضيات والخوخ.' },
+  { src: '/assets/hipz-duo-front.png', captionFr: 'Les deux saveurs — vue de face', captionAr: 'النكهتان — الواجهة الأمامية', altFr: 'Les bouteilles Lemon et Peach HIPZ présentées ensemble.', altAr: 'عبوتا Lemon وPeach من HIPZ معًا.' },
+  { src: '/assets/hipz-duo-back.png', captionFr: 'Les deux saveurs — vue arrière', captionAr: 'النكهتان — الجهة الخلفية', altFr: 'Les bouteilles Lemon et Peach HIPZ vues de dos.', altAr: 'الجهة الخلفية لعبوتي Lemon وPeach من HIPZ.' },
+  { src: '/assets/hipz-lifestyle-sip.png', captionFr: 'Une pause avec HIPZ', captionAr: 'لحظة انتعاش مع HIPZ', altFr: 'Scène de campagne lifestyle avec une personne qui boit une bouteille Lemon HIPZ.', altAr: 'مشهد من الحملة لشخص يشرب من عبوة Lemon من HIPZ.' },
+  { src: campaignImage, captionFr: 'Collage de campagne complet', captionAr: 'كولاج الحملة كاملًا', altFr: 'Collage de campagne HIPZ complet, conservé comme une seule image.', altAr: 'كولاج حملة HIPZ كامل، معروض كصورة واحدة.' },
+];
 
 function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [activeSection, setActiveSection] = useState('accueil');
   const [formFeedback, setFormFeedback] = useState<'success' | 'error' | ''>('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const closeButton = useRef<HTMLButtonElement>(null);
@@ -153,6 +170,16 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>('main section[id]');
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActiveSection(visible.target.id);
+    }, { rootMargin: '-22% 0px -58% 0px', threshold: [0, .15, .35, .6] });
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (!lightboxOpen) return;
     closeButton.current?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
@@ -160,9 +187,26 @@ function App() {
         event.preventDefault();
         setLightboxOpen(false);
       }
-      if (event.key === 'Tab') {
+      if (event.key === 'ArrowRight') {
         event.preventDefault();
-        closeButton.current?.focus();
+        setGalleryIndex((index) => (index + (rtl ? galleryImages.length - 1 : 1)) % galleryImages.length);
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        setGalleryIndex((index) => (index + (rtl ? 1 : galleryImages.length - 1)) % galleryImages.length);
+      }
+      if (event.key === 'Tab') {
+        const dialog = document.querySelector<HTMLElement>('.lightbox');
+        const items = dialog?.querySelectorAll<HTMLElement>('button:not([disabled])') ?? [];
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
       }
     };
     document.addEventListener('keydown', onKeyDown);
@@ -170,7 +214,7 @@ function App() {
       document.removeEventListener('keydown', onKeyDown);
       previousFocus.current?.focus();
     };
-  }, [lightboxOpen]);
+  }, [lightboxOpen, rtl]);
 
   const setLanguage = () => {
     setLang((current) => current === 'fr' ? 'ar' : 'fr');
@@ -202,6 +246,9 @@ function App() {
     previousFocus.current = event.currentTarget;
     setLightboxOpen(true);
   };
+  const stepGallery = (direction: number) => {
+    setGalleryIndex((index) => (index + direction + galleryImages.length) % galleryImages.length);
+  };
 
   const navLinks = [
     ['#accueil', t.nav[0]], ['#saveurs', t.nav[1]], ['#univers', t.nav[2]],
@@ -222,7 +269,7 @@ function App() {
           </button>
           <nav id="main-navigation" className={`nav-links${menuOpen ? ' open' : ''}`} aria-label={rtl ? 'روابط التنقل الرئيسية' : 'Navigation principale'}>
             {navLinks.map(([href, label], index) => (
-              <a href={href} onClick={() => setMenuOpen(false)} key={href} data-testid={`link-nav-${index}`}>{label}</a>
+              <a href={href} onClick={() => setMenuOpen(false)} key={href} aria-current={activeSection === href.slice(1) ? 'location' : undefined} data-testid={`link-nav-${index}`}>{label}</a>
             ))}
             <button className="lang-switch" type="button" onClick={setLanguage} aria-label={rtl ? 'تغيير اللغة إلى الفرنسية' : 'Changer la langue en arabe'} data-testid="button-language">
               {t.language}
@@ -245,8 +292,8 @@ function App() {
             <div className="hero-logo-lockup"><img src={logoImage} alt="" aria-hidden="true" /><span dir="ltr">HIPZ — dima s7ab</span></div>
           </div>
           <div className="hero-visual" data-testid="hero-campaign-visual">
-            <div className="hero-image-frame"><img src={campaignImage} alt={t.alt} fetchPriority="high" /></div>
-            <div className="image-caption"><span>Campagne / حملة</span><span>01 — 02</span></div>
+            <div className="hero-image-frame"><img src="/assets/hipz-hero-wide.png" alt={rtl ? galleryImages[0].altAr : galleryImages[0].altFr} fetchPriority="high" /></div>
+            <div className="image-caption"><span>HIPZ — DIMA S7AB</span><span>LEMON × PEACH</span></div>
           </div>
           <div className="scroll-mark"><ArrowDown size={14} aria-hidden="true" /> {t.scroll}</div>
         </section>
@@ -264,7 +311,7 @@ function App() {
               <p>{t.lemonDescription}</p>
               <a className="button-outline" href="#galerie" data-testid="link-lemon-campaign">{t.flavorButton} {rtl ? <ArrowLeft size={15} /> : <ArrowRight size={15} />}</a>
             </div>
-            <div className="flavor-visual" aria-hidden="true"><div className="flavor-orbit"><span className="flavor-word">LE</span><span className="flavor-mark">LEMON</span></div></div>
+            <div className="flavor-visual"><img src="/assets/hipz-lemon-campaign.png" alt={t.lemonAlt} loading="lazy" /></div>
           </article>
           <article className="flavor-panel peach" data-testid="panel-flavor-peach">
             <div className="flavor-copy">
@@ -273,7 +320,7 @@ function App() {
               <p>{t.peachDescription}</p>
               <a className="button-outline" href="#galerie" data-testid="link-peach-campaign">{t.flavorButton} {rtl ? <ArrowLeft size={15} /> : <ArrowRight size={15} />}</a>
             </div>
-            <div className="flavor-visual" aria-hidden="true"><div className="flavor-orbit"><span className="flavor-word">PE</span><span className="flavor-mark">PEACH</span></div></div>
+            <div className="flavor-visual"><img src="/assets/hipz-peach-campaign.png" alt={t.peachAlt} loading="lazy" /></div>
           </article>
         </section>
 
@@ -289,10 +336,17 @@ function App() {
             <div><div className="section-kicker">{t.galleryEyebrow}</div><h2 className="section-title" id="gallery-title">{t.galleryTitle}</h2></div>
             <p>{t.galleryText}</p>
           </div>
-          <button className="gallery-card" type="button" onClick={openLightbox} aria-label={t.openImage} data-testid="button-open-gallery">
-            <img src={campaignImage} alt={t.alt} loading="lazy" />
+          <button className="gallery-card" type="button" onClick={openLightbox} aria-label={`${t.openImage} ${galleryIndex + 1}`} data-testid="button-open-gallery">
+            <img src={galleryImages[galleryIndex].src} alt={rtl ? galleryImages[galleryIndex].altAr : galleryImages[galleryIndex].altFr} loading="lazy" />
           </button>
-          <div className="gallery-caption"><span>{t.galleryCaption}</span><span>01 / 01</span></div>
+          <div className="gallery-caption">
+            <span>{rtl ? galleryImages[galleryIndex].captionAr : galleryImages[galleryIndex].captionFr}</span>
+            <div className="gallery-controls" aria-label={rtl ? 'التنقل بين الصور' : 'Navigation des visuels'}>
+              <button type="button" onClick={() => stepGallery(rtl ? 1 : -1)} aria-label={t.previous} data-testid="button-gallery-previous">{rtl ? <ArrowRight size={18} aria-hidden="true" /> : <ArrowLeft size={18} aria-hidden="true" />}</button>
+              <span className="gallery-count" aria-live="polite">{String(galleryIndex + 1).padStart(2, '0')} / {String(galleryImages.length).padStart(2, '0')}</span>
+              <button type="button" onClick={() => stepGallery(rtl ? -1 : 1)} aria-label={t.next} data-testid="button-gallery-next">{rtl ? <ArrowLeft size={18} aria-hidden="true" /> : <ArrowRight size={18} aria-hidden="true" />}</button>
+            </div>
+          </div>
         </section>
 
         <section className="section about-section" id="apropos" aria-labelledby="about-title">
@@ -390,8 +444,12 @@ function App() {
       {lightboxOpen && (
         <div className="lightbox" role="dialog" aria-modal="true" aria-label={t.galleryCaption} onMouseDown={(event) => { if (event.target === event.currentTarget) setLightboxOpen(false); }} data-testid="dialog-gallery-lightbox">
           <button className="lightbox-close" type="button" aria-label={t.close} onClick={() => setLightboxOpen(false)} ref={closeButton} data-testid="button-close-lightbox"><X size={22} /></button>
-          <img src={campaignImage} alt={t.alt} />
-          <div className="lightbox-label">{t.galleryCaption} · 01 / 01</div>
+          <img src={galleryImages[galleryIndex].src} alt={rtl ? galleryImages[galleryIndex].altAr : galleryImages[galleryIndex].altFr} />
+          <div className="lightbox-controls">
+            <button type="button" onClick={() => stepGallery(rtl ? 1 : -1)} aria-label={t.previous}>{rtl ? <ArrowRight size={21} aria-hidden="true" /> : <ArrowLeft size={21} aria-hidden="true" />}</button>
+            <button type="button" onClick={() => stepGallery(rtl ? -1 : 1)} aria-label={t.next}>{rtl ? <ArrowLeft size={21} aria-hidden="true" /> : <ArrowRight size={21} aria-hidden="true" />}</button>
+          </div>
+          <div className="lightbox-label">{rtl ? galleryImages[galleryIndex].captionAr : galleryImages[galleryIndex].captionFr} · {String(galleryIndex + 1).padStart(2, '0')} / {String(galleryImages.length).padStart(2, '0')}</div>
         </div>
       )}
     </div>

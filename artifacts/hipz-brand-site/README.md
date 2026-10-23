@@ -11,7 +11,7 @@ Bilingual French/Arabic campaign presentation site built with React, TypeScript 
 
 ## Content and asset notes
 
-The provided official-style logo and full campaign collage are in `public/assets/`. The collage intentionally stays a single complete visual; its panels are not represented as separate image files. Replace those files only with approved official assets, retaining the existing filenames or updating the references in `src/App.tsx`.
+The provided logo, full campaign collage, wide duo campaign, Lemon and Peach campaign visuals, duo front/back product imagery, and lifestyle image are in `public/assets/`. The collage intentionally stays a single complete visual; its panels are not represented as separate image files. Flavor visuals and gallery imagery use the individual supplied images without cropping packaging into fabricated product views. Replace those files only with approved official assets, retaining the existing filenames or updating the references in `src/App.tsx`.
 
 Flavor descriptions and brand-universe text are editable campaign draft copy, not product or company facts. The phone numbers and Instagram/TikTok profile links were supplied for publication. Before launch, the brand owner should still provide the legal company name, approved company introduction, location, distribution details, and any approved product descriptions.
 
