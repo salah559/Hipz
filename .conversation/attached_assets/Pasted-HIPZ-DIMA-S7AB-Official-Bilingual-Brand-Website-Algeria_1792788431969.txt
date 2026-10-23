@@ -1,0 +1,549 @@
+HIPZ — DIMA S7AB
+
+Official Bilingual Brand Website — Algeria
+
+YOUR ROLE
+
+Act as a world-class creative director, premium beverage-brand designer, UX/UI specialist, and senior full-stack frontend engineer.
+
+Your mission is to design and implement a complete, polished, production-ready official presentation website for HIPZ, a fruit-drink brand featuring two products:
+
+- HIPZ Lemon — yellow packaging, lemon flavor.
+- HIPZ Peach — orange packaging, peach flavor.
+
+The official brand slogan is:
+
+HIPZ — dima s7ab
+
+This is a real-world presentation project intended to be shown to the brand's owner or management. The final result must demonstrate professional design quality, brand awareness, technical competence, and commercial value.
+
+Do not build a generic corporate template. Create a distinctive beverage-brand experience that feels like a premium advertising campaign.
+
+---
+
+1. BRAND POSITIONING
+
+The visual identity should communicate:
+
+- Refreshment and fruit-inspired energy.
+- Friendship, sharing, and youthful culture.
+- A contemporary Algerian brand identity.
+- Premium visual quality and product appeal.
+- A recognizable identity across web and social media.
+
+Main creative concept:
+
+“Deux saveurs. Une seule vibe.”
+
+Arabic equivalent:
+
+“نكهتان، وفايب واحد.”
+
+The brand's official slogan must remain exactly:
+
+“dima s7ab”
+
+Do not replace it with another slogan.
+
+Use French as the default language and Arabic as the second language. Both languages must feel native to the design.
+
+---
+
+2. TECHNOLOGY STACK
+
+Build the actual website using:
+
+- React.
+- TypeScript.
+- Vite.
+- Tailwind CSS, if available and properly configured.
+- Lucide icons.
+- Framer Motion, only if its dependency is installed or can be configured correctly.
+
+Use reusable components, a clean project structure, maintainable styles, and accessible semantic HTML.
+
+Inspect the existing project before making changes. Reuse working code and dependencies when appropriate.
+
+Do not return only a mockup, specification, or screenshot. Implement the working website.
+
+---
+
+3. DESIGN SYSTEM
+
+Create a custom visual system.
+
+Colors
+
+- Lemon Yellow: #FFD52A
+- Peach Orange: #FF713F
+- Fresh Green: #326B3B
+- Warm Cream: #FFF9EC
+- Deep Charcoal: #171914
+- White: #FFFFFF
+
+Use the colors according to the product and section context. Avoid applying every color everywhere.
+
+Typography
+
+Use a bold, modern display font for large headlines and a clean, readable font for body text.
+
+Use fonts that support French, Latin characters, and Arabic script. Prefer a compatible font pairing such as a modern Latin sans-serif and an Arabic family such as Cairo or IBM Plex Sans Arabic.
+
+Ensure correct rendering of:
+
+- Arabic diacritics where supplied.
+- Arabic punctuation.
+- French accents.
+- Numerals and mixed Arabic/Latin brand text.
+
+Art Direction
+
+Use:
+
+- Cinematic orchard photography.
+- Real fruit textures.
+- Realistic product lighting and shadows.
+- Carefully composed bottle photography.
+- Fresh leaves and fruit slices.
+- Restrained water and juice-splash effects.
+- Bold editorial layouts.
+- Generous whitespace.
+- Smooth, purposeful transitions.
+
+Avoid:
+
+- Generic SaaS layouts.
+- Excessive glassmorphism.
+- Unnecessary gradients.
+- Repetitive feature-card grids.
+- Overly rounded containers everywhere.
+- Cartoonish bottle illustrations.
+- Distracting or excessive animations.
+
+The product photography must remain the visual priority.
+
+---
+
+4. BILINGUAL ARCHITECTURE — CRITICAL
+
+Implement a complete French/Arabic language switcher in the main navigation.
+
+French must be the default language.
+
+Display language options clearly, for example:
+
+- FR
+- العربية
+
+When Arabic is selected:
+
+1. Set the document language to Arabic.
+2. Set the page direction to RTL.
+3. Reverse directional navigation and layout where appropriate.
+4. Align Arabic text correctly.
+5. Adjust icons, arrows, menus, and breadcrumbs according to direction.
+6. Keep product images and brand logos in their correct orientation.
+7. Preserve the exact Latin spelling of HIPZ and “dima s7ab”.
+8. Ensure all sections, forms, menus, and footer elements are translated.
+
+When French is selected:
+
+1. Set the document language to French.
+2. Restore LTR layout.
+3. Use natural French typography and punctuation.
+4. Restore the French content throughout the entire site.
+
+Implement a centralized translation dictionary or a well-structured i18n system. Never translate only the hero while leaving the rest of the page in the previous language.
+
+Language switching must happen instantly without a full-page reload.
+
+Suggested French hero:
+
+Headline: “HIPZ. DIMA S7AB.”
+
+Supporting text: “Deux saveurs. Une seule vibe.”
+
+Primary CTA: “Découvrir nos saveurs”
+
+Secondary CTA: “L'univers HIPZ”
+
+Suggested Arabic hero:
+
+Headline: “HIPZ. DIMA S7AB.”
+
+Supporting text: “نكهتان. فايب واحد.”
+
+Primary CTA: “اكتشف نكهاتنا”
+
+Secondary CTA: “اكتشف عالم HIPZ”
+
+Use natural, concise translations rather than literal translations that sound unnatural.
+
+---
+
+5. WEBSITE SECTIONS
+
+SECTION A — Navigation
+
+Create a refined navigation bar featuring:
+
+- HIPZ logo.
+- Accueil / الرئيسية.
+- Nos saveurs / نكهاتنا.
+- L'univers HIPZ / عالم HIPZ.
+- Galerie / المعرض.
+- À propos / من نحن.
+- Contact / اتصل بنا.
+- FR / العربية language selector.
+
+Requirements:
+
+- Sticky navigation when appropriate.
+- Transparent or subtle navigation over the hero.
+- Refined background transition when scrolling.
+- Smooth scrolling to sections.
+- Accessible mobile menu.
+- Correct RTL behavior.
+- Visible keyboard focus states.
+
+SECTION B — Cinematic Hero
+
+Create a visually memorable hero section.
+
+Composition:
+
+- A lemon-yellow bottle and a peach-orange bottle.
+- Beautiful orchard or fruit-inspired background.
+- Realistic lighting and product shadows.
+- Carefully controlled fruit and liquid effects.
+- Strong visual separation between the two flavors.
+- The HIPZ logo and slogan clearly visible.
+
+Headline:
+“HIPZ. DIMA S7AB.”
+
+French subtitle:
+“Deux saveurs. Une seule vibe.”
+
+Arabic subtitle:
+“نكهتان. فايب واحد.”
+
+Buttons:
+
+- Discover Our Flavors.
+- Explore the HIPZ Universe.
+
+Make the hero look like a professionally art-directed advertising campaign.
+
+Use subtle product entrance animations and gentle background movement. Ensure that the hero remains fast and attractive on mobile.
+
+Do not distort the real bottles or invent a different label.
+
+SECTION C — Flavor Discovery
+
+Create two large product showcases with distinct visual personalities.
+
+PRODUCT 1: HIPZ LEMON
+
+Palette:
+
+- Lemon yellow.
+- Fresh green.
+- White highlights.
+
+Visual elements:
+
+- Real lemon slices.
+- Fresh leaves.
+- Bright sunlight.
+- Tasteful liquid splashes.
+- A large, sharp bottle image.
+
+French heading:
+“L'énergie du citron.”
+
+Arabic heading:
+“انتعاش بنكهة الليمون.”
+
+Use an editable short product description that can be approved by the brand owner.
+
+PRODUCT 2: HIPZ PEACH
+
+Palette:
+
+- Peach orange.
+- Warm coral.
+- Cream highlights.
+
+Visual elements:
+
+- Fresh peaches.
+- Peach slices.
+- Leaves and fruit textures.
+- Warm sunlight.
+- A large, sharp bottle image.
+
+French heading:
+“La douceur de la pêche.”
+
+Arabic heading:
+“نعومة نكهة الخوخ.”
+
+Each product section should have:
+
+- Large product imagery.
+- Flavor name.
+- Short bilingual description.
+- Flavor-specific CTA.
+- Subtle hover or scroll interaction.
+
+Use a refined alternating layout rather than two generic product cards.
+
+Do not invent nutritional information, ingredients, bottle capacity, health benefits, or certifications.
+
+SECTION D — Brand Universe: Dima S7ab
+
+Create an immersive brand-storytelling section.
+
+Theme:
+Friendship, shared moments, refreshment, summer, and positive youthful energy.
+
+Use editorial typography, authentic lifestyle photography, and a confident visual rhythm.
+
+French copy:
+“Les bons moments sont encore meilleurs entre amis.”
+
+Arabic copy:
+“أحلى اللحظات تجمع الصحاب.”
+
+Present these as creative campaign copy, not verified company history.
+
+Do not fabricate founding dates, company milestones, factory details, or official mission statements.
+
+SECTION E — Campaign Gallery
+
+Create an attractive gallery containing separate images for:
+
+- Lemon campaigns.
+- Peach campaigns.
+- Both-flavor campaigns.
+- Lifestyle and brand campaigns.
+
+Requirements:
+
+- Asymmetric grid or carefully composed masonry layout.
+- Image hover interactions.
+- Accessible image lightbox.
+- Keyboard navigation and close controls.
+- Optional video support.
+- Responsive layouts.
+- Lazy loading.
+- Optimized image dimensions.
+
+Every image must open as an individual asset.
+
+If only a collage is available, do not pretend its individual panels are separate original high-resolution files. Use the collage only as a reference or as a complete campaign image.
+
+SECTION F — About HIPZ
+
+Build a clean, premium company-introduction section.
+
+Create editable content fields for:
+
+- Official company name.
+- Company introduction.
+- Location.
+- Distribution information.
+- Official contact details.
+
+If verified company information is not supplied, display neutral draft copy or clearly identifiable placeholders.
+
+Never invent factual company details.
+
+SECTION G — Distribution and Business Contact
+
+Create a professional business-contact section for potential distributors, retailers, and commercial partners.
+
+Include:
+
+- Name.
+- Business or organization name, optional.
+- Email.
+- Phone number, optional.
+- Inquiry type.
+- Message.
+
+Translate all labels, validation errors, and success messages.
+
+Implement proper input validation and accessible feedback.
+
+Do not claim that a message was delivered unless a backend or email service is actually configured.
+
+If backend integration is unavailable, provide a clear integration point and document the setup needed to enable submissions.
+
+Do not invent a company phone number, email, or social media profile.
+
+SECTION H — Footer
+
+Include:
+
+- HIPZ logo.
+- “dima s7ab” slogan.
+- Navigation links.
+- Language switcher if appropriate.
+- Official social media links, once supplied.
+- Contact details, once verified.
+- Copyright line.
+
+Ensure the footer is correctly translated and aligned in both LTR and RTL modes.
+
+---
+
+6. PRODUCT ASSET MANAGEMENT
+
+Inspect all supplied reference images before implementation.
+
+Create a clear asset directory, for example:
+
+public/assets/
+logo/
+products/
+campaigns/
+lifestyle/
+
+Use the real product references as the source of truth.
+
+Prioritize:
+
+1. Official logo file, if supplied.
+2. Actual Lemon bottle image.
+3. Actual Peach bottle image.
+4. Individual advertising images.
+5. Brand-approved lifestyle photography.
+
+If a bottle photograph has an unsuitable background, use a suitable image-editing or background-removal workflow where available. Do not simply stretch the image or hide packaging details.
+
+Do not invent an official vector logo from a text approximation when the real logo asset is available.
+
+If an official asset is missing, create a clearly replaceable placeholder and explain what should be supplied.
+
+Never display generated bottle packaging as an exact representation of the real product.
+
+---
+
+7. MOTION AND INTERACTION
+
+Implement polished but restrained motion:
+
+- Hero bottle entrance animation.
+- Smooth section reveals.
+- Gentle product-image movement.
+- Flavor-specific hover effects.
+- Navigation transitions.
+- Gallery lightbox.
+- Language switcher transitions.
+- Mobile menu animation.
+
+Motion must support the brand rather than distract from it.
+
+Respect the user's reduced-motion preference.
+
+Avoid scroll hijacking, excessive parallax, and animations that interfere with reading or mobile performance.
+
+---
+
+8. RESPONSIVE DESIGN
+
+Design and test the website at:
+
+- 360px mobile width.
+- 390px mobile width.
+- 768px tablet width.
+- 1024px laptop width.
+- 1440px desktop width.
+
+Requirements:
+
+- No horizontal overflow.
+- No overlapping text.
+- No distorted bottles.
+- No clipped Arabic characters.
+- Correct RTL alignment.
+- Touch-friendly controls.
+- Responsive image cropping.
+- Readable text at all sizes.
+
+The mobile hero should remain visually impressive without requiring excessive scrolling before the main brand message appears.
+
+---
+
+9. SEO AND ACCESSIBILITY
+
+Implement:
+
+- Unique French page title and meta description.
+- Appropriate Arabic metadata when practical.
+- Open Graph title, description, and image.
+- Favicon support using official assets.
+- Semantic heading hierarchy.
+- Descriptive image alt text.
+- Accessible navigation and form controls.
+- Keyboard-accessible lightbox.
+- Visible focus indicators.
+- Proper color contrast.
+- Lazy loading and image optimization.
+
+Do not add fake reviews, fake structured business details, or unsupported product claims.
+
+---
+
+10. PERFORMANCE AND QUALITY ASSURANCE
+
+Before completion:
+
+1. Install or verify the required dependencies.
+2. Run the available linting and type checks.
+3. Build the production version.
+4. Fix errors and warnings that affect functionality.
+5. Test both languages.
+6. Verify LTR and RTL behavior.
+7. Test the navigation and mobile menu.
+8. Test the gallery and image lightbox.
+9. Test forms and validation.
+10. Inspect responsive layouts and eliminate horizontal overflow.
+11. Confirm all local image paths work.
+12. Verify that no visible button is decorative while appearing functional.
+
+Keep dependencies reasonable and avoid unnecessary libraries.
+
+---
+
+11. DEPLOYMENT
+
+Prepare the project for deployment to:
+
+- Vercel.
+- Static hosting through cPanel, where supported.
+
+Include:
+
+- Development command.
+- Production build command.
+- Deployment instructions.
+- Asset replacement instructions.
+- A list of official company information still required.
+- Clear instructions for enabling the contact form.
+
+---
+
+12. FINAL EXPECTATION
+
+Deliver a complete working bilingual website, not just a concept.
+
+The finished result should make the brand owner feel that HIPZ already has a recognizable digital identity and a strong online presence.
+
+Prioritize real product accuracy, outstanding art direction, correct French and Arabic typography, polished mobile UX, and reliable functionality.
+
+Start by inspecting the available project and assets. Then implement the website, run the production build, test all major interactions, and summarize the finished work and remaining official information needed.
+
+Do not stop after writing a plan. Build the actual website.
