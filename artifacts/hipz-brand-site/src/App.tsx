@@ -35,6 +35,8 @@ const copy = {
     contactEyebrow: 'On se parle ?',
     contactTitle: 'Pour les projets qui se partagent.',
     contactCopy: 'Distributeur, commerçant ou partenaire ? Laissez vos coordonnées et votre message. Ce formulaire est une démonstration et n’envoie rien.',
+    phoneHeading: 'Téléphone',
+    socialHeading: 'Réseaux sociaux',
     name: 'Nom complet',
     business: 'Entreprise / organisation (facultatif)',
     email: 'Adresse e-mail',
@@ -50,7 +52,6 @@ const copy = {
     demoError: 'Vérifiez les champs indiqués avant de continuer.',
     footerLabel: 'Le goût des moments partagés.',
     copyright: '© HIPZ — contenu éditable, informations officielles à confirmer.',
-    noSocial: 'Réseaux officiels à ajouter après confirmation.',
     close: 'Fermer le visuel',
     skip: 'Passer au contenu',
     language: 'العربية',
@@ -86,6 +87,8 @@ const copy = {
     contactEyebrow: 'خلّينا نحكيو',
     contactTitle: 'لمشاريع تجمعنا.',
     contactCopy: 'موزّع أو تاجر أو شريك محتمل؟ اترك بياناتك ورسالتك. هذا النموذج تجريبي ولا يرسل أي شيء.',
+    phoneHeading: 'أرقام الهاتف',
+    socialHeading: 'حسابات التواصل',
     name: 'الاسم الكامل',
     business: 'الشركة / المؤسسة (اختياري)',
     email: 'البريد الإلكتروني',
@@ -101,7 +104,6 @@ const copy = {
     demoError: 'يرجى مراجعة الحقول المحددة قبل المتابعة.',
     footerLabel: 'نكهة اللحظات اللي تجمعنا.',
     copyright: '© HIPZ — المحتوى قابل للتعديل، والمعلومات الرسمية بانتظار التأكيد.',
-    noSocial: 'تُضاف الحسابات الرسمية بعد تأكيدها.',
     close: 'إغلاق صورة الحملة',
     skip: 'انتقل إلى المحتوى',
     language: 'FR',
@@ -307,6 +309,22 @@ function App() {
               <div className="section-kicker">{t.contactEyebrow}</div>
               <h2 className="section-title" id="contact-title">{t.contactTitle}</h2>
               <p>{t.contactCopy}</p>
+              <div className="contact-details" aria-label={rtl ? 'بيانات التواصل المباشر' : 'Coordonnées directes'}>
+                <div className="contact-detail-group">
+                  <h3>{t.phoneHeading}</h3>
+                  <div className="contact-detail-links">
+                    <a href="tel:0770787889" dir="ltr" data-testid="link-phone-0770787889">0770787889</a>
+                    <a href="tel:0560404339" dir="ltr" data-testid="link-phone-0560404339">0560404339</a>
+                  </div>
+                </div>
+                <div className="contact-detail-group">
+                  <h3>{t.socialHeading}</h3>
+                  <div className="contact-detail-links">
+                    <a href="https://www.instagram.com/hipzdrink/" target="_blank" rel="noopener noreferrer" aria-label={rtl ? 'حساب HIPZ على Instagram' : 'Instagram — compte HIPZ'} data-testid="link-instagram">Instagram <ArrowUpRight size={13} aria-hidden="true" /></a>
+                    <a href="https://www.tiktok.com/@hipzdrink" target="_blank" rel="noopener noreferrer" aria-label={rtl ? 'حساب HIPZ على TikTok' : 'TikTok — compte HIPZ'} data-testid="link-tiktok">TikTok <ArrowUpRight size={13} aria-hidden="true" /></a>
+                  </div>
+                </div>
+              </div>
             </div>
             <form className="contact-form" noValidate onSubmit={handleSubmit} data-testid="form-contact">
               <div className="field">
@@ -349,12 +367,24 @@ function App() {
       <footer className="footer">
         <div className="footer-main">
           <div className="footer-logo"><img src={logoImage} alt="" /><span dir="ltr">HIPZ — dima s7ab</span></div>
+          <div className="footer-contact" aria-label={rtl ? 'طرق التواصل مع HIPZ' : 'Contacter HIPZ'}>
+            <div>
+              <span>{t.phoneHeading}</span>
+              <a href="tel:0770787889" dir="ltr" data-testid="footer-phone-0770787889">0770787889</a>
+              <a href="tel:0560404339" dir="ltr" data-testid="footer-phone-0560404339">0560404339</a>
+            </div>
+            <div>
+              <span>{t.socialHeading}</span>
+              <a href="https://www.instagram.com/hipzdrink/" target="_blank" rel="noopener noreferrer" data-testid="footer-instagram">Instagram</a>
+              <a href="https://www.tiktok.com/@hipzdrink" target="_blank" rel="noopener noreferrer" data-testid="footer-tiktok">TikTok</a>
+            </div>
+          </div>
           <nav className="footer-links" aria-label={rtl ? 'روابط التذييل' : 'Navigation de pied de page'}>
             {navLinks.map(([href, label], index) => <a href={href} key={href} data-testid={`link-footer-${index}`}>{label}</a>)}
             <button className="lang-switch" type="button" onClick={setLanguage} data-testid="button-footer-language">{t.language}</button>
           </nav>
         </div>
-        <div className="footer-bottom"><span>{t.copyright}</span><span>{t.footerLabel} · {t.noSocial}</span></div>
+        <div className="footer-bottom"><span>{t.copyright}</span><span>{t.footerLabel}</span></div>
       </footer>
 
       {lightboxOpen && (

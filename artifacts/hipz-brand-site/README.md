@@ -13,7 +13,7 @@ Bilingual French/Arabic campaign presentation site built with React, TypeScript 
 
 The provided official-style logo and full campaign collage are in `public/assets/`. The collage intentionally stays a single complete visual; its panels are not represented as separate image files. Replace those files only with approved official assets, retaining the existing filenames or updating the references in `src/App.tsx`.
 
-Flavor descriptions and brand-universe text are editable campaign draft copy, not product or company facts. Before publication, the brand owner should provide the legal company name, approved company introduction, location, distribution details, verified official contact information, official social profiles, and any approved product descriptions.
+Flavor descriptions and brand-universe text are editable campaign draft copy, not product or company facts. The phone numbers and Instagram/TikTok profile links were supplied for publication. Before launch, the brand owner should still provide the legal company name, approved company introduction, location, distribution details, and any approved product descriptions.
 
 ## Contact form integration
 
