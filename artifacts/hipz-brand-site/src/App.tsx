@@ -111,27 +111,22 @@ const copy = {
   },
 } as const;
 
-const campaignImage = '/assets/hipz-campaign-collage.png';
 const logoImage = '/assets/hipz-logo.png';
-const galleryImages = [
-  { src: '/assets/hipz-hero-wide.png', captionFr: 'Campagne — Lemon × Peach', captionAr: 'حملة — Lemon × Peach', altFr: 'Visuel large de campagne HIPZ : les deux bouteilles au milieu des agrumes et des pêches.', altAr: 'صورة حملة HIPZ عريضة: العبوتان بين الحمضيات والخوخ.' },
-  { src: '/assets/hipz-duo-front.png', captionFr: 'Les deux saveurs — vue de face', captionAr: 'النكهتان — الواجهة الأمامية', altFr: 'Les bouteilles Lemon et Peach HIPZ présentées ensemble.', altAr: 'عبوتا Lemon وPeach من HIPZ معًا.' },
-  { src: '/assets/hipz-duo-back.png', captionFr: 'Les deux saveurs — vue arrière', captionAr: 'النكهتان — الجهة الخلفية', altFr: 'Les bouteilles Lemon et Peach HIPZ vues de dos.', altAr: 'الجهة الخلفية لعبوتي Lemon وPeach من HIPZ.' },
-  { src: '/assets/hipz-lifestyle-sip.png', captionFr: 'Une pause avec HIPZ', captionAr: 'لحظة انتعاش مع HIPZ', altFr: 'Scène de campagne lifestyle avec une personne qui boit une bouteille Lemon HIPZ.', altAr: 'مشهد من الحملة لشخص يشرب من عبوة Lemon من HIPZ.' },
-  { src: campaignImage, captionFr: 'Collage de campagne complet', captionAr: 'كولاج الحملة كاملًا', altFr: 'Collage de campagne HIPZ complet, conservé comme une seule image.', altAr: 'كولاج حملة HIPZ كامل، معروض كصورة واحدة.' },
+const campaignBackgrounds = [
+  { src: '/assets/hipz-background-moments.png', mobileSrc: '/assets/hipz-lifestyle-sip.png' },
+  { src: '/assets/hipz-background-flavors.png', mobileSrc: '/assets/hipz-duo-front.png' },
+  { src: '/assets/hipz-hero-wide.png', mobileSrc: '/assets/hipz-duo-back.png' },
 ];
 
 function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const [backgroundPlaying, setBackgroundPlaying] = useState(false);
   const [activeSection, setActiveSection] = useState('accueil');
   const [formFeedback, setFormFeedback] = useState<'success' | 'error' | ''>('');
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const closeButton = useRef<HTMLButtonElement>(null);
-  const previousFocus = useRef<HTMLElement | null>(null);
   const t = copy[lang];
   const rtl = lang === 'ar';
 
@@ -162,6 +157,24 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setBackgroundPlaying(!reduceMotion.matches);
+    const onMotionPreferenceChange = (event: MediaQueryListEvent) => {
+      if (event.matches) setBackgroundPlaying(false);
+    };
+    reduceMotion.addEventListener('change', onMotionPreferenceChange);
+    return () => reduceMotion.removeEventListener('change', onMotionPreferenceChange);
+  }, []);
+
+  useEffect(() => {
+    if (!backgroundPlaying) return;
+    const timer = window.setInterval(() => {
+      setBackgroundIndex((index) => (index + 1) % campaignBackgrounds.length);
+    }, 6000);
+    return () => window.clearInterval(timer);
+  }, [backgroundPlaying]);
+
+  useEffect(() => {
     const sections = document.querySelectorAll<HTMLElement>('main section[id]');
     const observer = new IntersectionObserver((entries) => {
       const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -170,43 +183,6 @@ function App() {
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    if (!lightboxOpen) return;
-    closeButton.current?.focus();
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        setLightboxOpen(false);
-      }
-      if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        setGalleryIndex((index) => (index + (rtl ? galleryImages.length - 1 : 1)) % galleryImages.length);
-      }
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        setGalleryIndex((index) => (index + (rtl ? 1 : galleryImages.length - 1)) % galleryImages.length);
-      }
-      if (event.key === 'Tab') {
-        const dialog = document.querySelector<HTMLElement>('.lightbox');
-        const items = dialog?.querySelectorAll<HTMLElement>('button:not([disabled])') ?? [];
-        const first = items[0];
-        const last = items[items.length - 1];
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last?.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first?.focus();
-        }
-      }
-    };
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      previousFocus.current?.focus();
-    };
-  }, [lightboxOpen, rtl]);
 
   const setLanguage = () => {
     setLang((current) => current === 'fr' ? 'ar' : 'fr');
@@ -234,17 +210,13 @@ function App() {
     validate(event.currentTarget);
   };
 
-  const openLightbox = (event: MouseEvent<HTMLButtonElement>) => {
-    previousFocus.current = event.currentTarget;
-    setLightboxOpen(true);
-  };
-  const stepGallery = (direction: number) => {
-    setGalleryIndex((index) => (index + direction + galleryImages.length) % galleryImages.length);
+  const stepBackground = (direction: number) => {
+    setBackgroundIndex((index) => (index + direction + campaignBackgrounds.length) % campaignBackgrounds.length);
   };
 
   const navLinks = [
     ['#accueil', t.nav[0]], ['#saveurs', t.nav[1]], ['#univers', t.nav[2]],
-    ['#galerie', t.nav[3]], ['#apropos', t.nav[4]], ['#contact', t.nav[5]],
+    ['#apropos', t.nav[3]], ['#contact', t.nav[4]],
   ];
 
   return (
@@ -266,13 +238,27 @@ function App() {
             <button className="lang-switch" type="button" onClick={setLanguage} aria-label={rtl ? 'تغيير اللغة إلى الفرنسية' : 'Changer la langue en arabe'} data-testid="button-language">
               {t.language}
             </button>
-            <a className="nav-cta" href="#contact" onClick={() => setMenuOpen(false)} data-testid="link-nav-contact-cta">{t.nav[5]} <ArrowUpRight size={14} aria-hidden="true" /></a>
+            <a className="nav-cta" href="#contact" onClick={() => setMenuOpen(false)} data-testid="link-nav-contact-cta">{t.nav[4]} <ArrowUpRight size={14} aria-hidden="true" /></a>
           </nav>
         </div>
       </header>
 
       <main id="contenu">
         <section className="hero" id="accueil" aria-labelledby="hero-title">
+          <div className="hero-backgrounds" aria-hidden="true">
+            {campaignBackgrounds.map((background, index) => (
+              <div
+                className={`hero-background-slide${backgroundIndex === index ? ' active' : ''}`}
+                key={background.src}
+                style={{ backgroundImage: `url("${background.src}")` }}
+              >
+                <picture>
+                  <source media="(max-width: 760px)" srcSet={background.mobileSrc} />
+                  <img src={background.src} alt="" fetchPriority={index === 0 ? 'high' : undefined} />
+                </picture>
+              </div>
+            ))}
+          </div>
           <div className="hero-copy">
             <div className="eyebrow">{t.heroEyebrow}</div>
             <h1 id="hero-title"><span>HIPZ.</span><span className="brand-lower" dir="ltr">DIMA S7AB.</span></h1>
@@ -283,9 +269,24 @@ function App() {
             </div>
             <div className="hero-logo-lockup"><img src={logoImage} alt="" aria-hidden="true" /><span dir="ltr">HIPZ — dima s7ab</span></div>
           </div>
-          <div className="hero-visual" data-testid="hero-campaign-visual">
-            <div className="hero-image-frame"><img src="/assets/hipz-hero-wide.png" alt={rtl ? galleryImages[0].altAr : galleryImages[0].altFr} fetchPriority="high" /></div>
-            <div className="image-caption"><span>HIPZ — DIMA S7AB</span><span>LEMON × PEACH</span></div>
+          <div className="hero-background-controls" role="group" aria-label={t.backgroundControls}>
+            <button type="button" onClick={() => stepBackground(rtl ? 1 : -1)} aria-label={t.backgroundPrevious} data-testid="button-background-previous">
+              {rtl ? <ArrowRight size={18} aria-hidden="true" /> : <ArrowLeft size={18} aria-hidden="true" />}
+            </button>
+            <span className="hero-background-count" aria-hidden="true">
+              {String(backgroundIndex + 1).padStart(2, '0')} / {String(campaignBackgrounds.length).padStart(2, '0')}
+            </span>
+            <button type="button" onClick={() => stepBackground(rtl ? -1 : 1)} aria-label={t.backgroundNext} data-testid="button-background-next">
+              {rtl ? <ArrowLeft size={18} aria-hidden="true" /> : <ArrowRight size={18} aria-hidden="true" />}
+            </button>
+            <button
+              type="button"
+              onClick={() => setBackgroundPlaying((playing) => !playing)}
+              aria-label={backgroundPlaying ? t.backgroundPause : t.backgroundPlay}
+              data-testid="button-background-toggle"
+            >
+              {backgroundPlaying ? <Pause size={17} aria-hidden="true" /> : <Play size={17} aria-hidden="true" />}
+            </button>
           </div>
           <div className="scroll-mark"><ArrowDown size={14} aria-hidden="true" /> {t.scroll}</div>
         </section>
@@ -301,7 +302,7 @@ function App() {
               <span className="flavor-no">01 / LEMON</span>
               <h3>{t.lemonTitle}</h3>
               <p>{t.lemonDescription}</p>
-              <a className="button-outline" href="#galerie" data-testid="link-lemon-campaign">{t.flavorButton} {rtl ? <ArrowLeft size={15} /> : <ArrowRight size={15} />}</a>
+              <a className="button-outline" href="#contact" data-testid="link-lemon-contact">{t.flavorButton} {rtl ? <ArrowLeft size={15} /> : <ArrowRight size={15} />}</a>
             </div>
             <div className="flavor-visual"><img src="/assets/hipz-lemon-campaign.png" alt={t.lemonAlt} loading="lazy" /></div>
           </article>
@@ -310,7 +311,7 @@ function App() {
               <span className="flavor-no">02 / PEACH</span>
               <h3>{t.peachTitle}</h3>
               <p>{t.peachDescription}</p>
-              <a className="button-outline" href="#galerie" data-testid="link-peach-campaign">{t.flavorButton} {rtl ? <ArrowLeft size={15} /> : <ArrowRight size={15} />}</a>
+              <a className="button-outline" href="#contact" data-testid="link-peach-contact">{t.flavorButton} {rtl ? <ArrowLeft size={15} /> : <ArrowRight size={15} />}</a>
             </div>
             <div className="flavor-visual"><img src="/assets/hipz-peach-campaign.png" alt={t.peachAlt} loading="lazy" /></div>
           </article>
@@ -320,24 +321,6 @@ function App() {
           <div className="universe-grid">
             <div><div className="section-kicker">{t.universeEyebrow}</div><h2 className="section-title" id="universe-title" dir={rtl ? 'rtl' : undefined}><span dir="ltr">dima s7ab</span></h2><span className="universe-asterisk" aria-hidden="true">✳</span></div>
             <blockquote className="universe-quote" data-testid="text-campaign-copy">{t.universeTitle}<small>{t.universeNote}</small></blockquote>
-          </div>
-        </section>
-
-        <section className="section gallery-section" id="galerie" aria-labelledby="gallery-title">
-          <div className="gallery-head">
-            <div><div className="section-kicker">{t.galleryEyebrow}</div><h2 className="section-title" id="gallery-title">{t.galleryTitle}</h2></div>
-            <p>{t.galleryText}</p>
-          </div>
-          <button className="gallery-card" type="button" onClick={openLightbox} aria-label={`${t.openImage} ${galleryIndex + 1}`} data-testid="button-open-gallery">
-            <img src={galleryImages[galleryIndex].src} alt={rtl ? galleryImages[galleryIndex].altAr : galleryImages[galleryIndex].altFr} loading="lazy" />
-          </button>
-          <div className="gallery-caption">
-            <span>{rtl ? galleryImages[galleryIndex].captionAr : galleryImages[galleryIndex].captionFr}</span>
-            <div className="gallery-controls" aria-label={rtl ? 'التنقل بين الصور' : 'Navigation des visuels'}>
-              <button type="button" onClick={() => stepGallery(rtl ? 1 : -1)} aria-label={t.previous} data-testid="button-gallery-previous">{rtl ? <ArrowRight size={18} aria-hidden="true" /> : <ArrowLeft size={18} aria-hidden="true" />}</button>
-              <span className="gallery-count" aria-live="polite">{String(galleryIndex + 1).padStart(2, '0')} / {String(galleryImages.length).padStart(2, '0')}</span>
-              <button type="button" onClick={() => stepGallery(rtl ? -1 : 1)} aria-label={t.next} data-testid="button-gallery-next">{rtl ? <ArrowLeft size={18} aria-hidden="true" /> : <ArrowRight size={18} aria-hidden="true" />}</button>
-            </div>
           </div>
         </section>
 
@@ -433,17 +416,6 @@ function App() {
         <div className="footer-bottom"><span>{t.copyright}</span><span>{t.footerLabel}</span></div>
       </footer>
 
-      {lightboxOpen && (
-        <div className="lightbox" role="dialog" aria-modal="true" aria-label={t.galleryCaption} onMouseDown={(event) => { if (event.target === event.currentTarget) setLightboxOpen(false); }} data-testid="dialog-gallery-lightbox">
-          <button className="lightbox-close" type="button" aria-label={t.close} onClick={() => setLightboxOpen(false)} ref={closeButton} data-testid="button-close-lightbox"><X size={22} /></button>
-          <img src={galleryImages[galleryIndex].src} alt={rtl ? galleryImages[galleryIndex].altAr : galleryImages[galleryIndex].altFr} />
-          <div className="lightbox-controls">
-            <button type="button" onClick={() => stepGallery(rtl ? 1 : -1)} aria-label={t.previous}>{rtl ? <ArrowRight size={21} aria-hidden="true" /> : <ArrowLeft size={21} aria-hidden="true" />}</button>
-            <button type="button" onClick={() => stepGallery(rtl ? -1 : 1)} aria-label={t.next}>{rtl ? <ArrowLeft size={21} aria-hidden="true" /> : <ArrowRight size={21} aria-hidden="true" />}</button>
-          </div>
-          <div className="lightbox-label">{rtl ? galleryImages[galleryIndex].captionAr : galleryImages[galleryIndex].captionFr} · {String(galleryIndex + 1).padStart(2, '0')} / {String(galleryImages.length).padStart(2, '0')}</div>
-        </div>
-      )}
     </div>
   );
 }
