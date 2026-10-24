@@ -1,5 +1,5 @@
-import { useEffect, useState, type FormEvent } from 'react';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Menu, Pause, Play, X } from 'lucide-react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Menu, Pause, Play, Volume2, VolumeX, X } from 'lucide-react';
 import './index.css';
 
 type Language = 'fr' | 'ar';
@@ -25,11 +25,12 @@ const copy = {
     universeEyebrow: 'L’univers HIPZ',
     universeTitle: 'Les bons moments sont encore meilleurs entre amis.',
     universeNote: 'Une expression de campagne, pas un récit historique.',
-    backgroundControls: 'Commandes des fonds de campagne',
-    backgroundPrevious: 'Image de fond précédente',
-    backgroundNext: 'Image de fond suivante',
-    backgroundPause: 'Mettre le changement de fond en pause',
-    backgroundPlay: 'Reprendre le changement de fond',
+    backgroundControls: 'Commandes de la vidéo de fond',
+    videoPause: 'Mettre la vidéo en pause',
+    videoPlay: 'Lire la vidéo',
+    soundUnmute: 'Activer le son',
+    soundMute: 'Couper le son',
+    videoBadge: 'VIDÉO OFFICIELLE',
     aboutEyebrow: 'À propos',
     aboutTitle: 'HIPZ, à découvrir.',
     aboutCopy: 'Un espace pour raconter HIPZ — Dima S7ab, ses deux saveurs et les moments qu’elles inspirent.',
@@ -77,11 +78,12 @@ const copy = {
     universeEyebrow: 'عالم HIPZ',
     universeTitle: 'أحلى اللحظات تجمع الصحاب.',
     universeNote: 'عبارة إبداعية للحملة، وليست رواية تاريخية.',
-    backgroundControls: 'التحكم في خلفيات الحملة',
-    backgroundPrevious: 'الخلفية السابقة',
-    backgroundNext: 'الخلفية التالية',
-    backgroundPause: 'إيقاف تغيير الخلفية مؤقتًا',
-    backgroundPlay: 'استئناف تغيير الخلفية',
+    backgroundControls: 'التحكم في فيديو الخلفية',
+    videoPause: 'إيقاف الفيديو مؤقتًا',
+    videoPlay: 'تشغيل الفيديو',
+    soundUnmute: 'تشغيل الصوت',
+    soundMute: 'كتم الصوت',
+    videoBadge: 'فيديو رسمي',
     aboutEyebrow: 'من نحن',
     aboutTitle: 'تعرّف على HIPZ.',
     aboutCopy: 'مساحة للتعريف بـ HIPZ — dima s7ab، ونكهتيها، واللحظات التي تلهمها.',
@@ -112,18 +114,15 @@ const copy = {
 } as const;
 
 const logoImage = '/assets/hipz-logo.png';
-const campaignBackgrounds = [
-  { src: '/assets/hipz-background-moments.png', mobileSrc: '/assets/hipz-lifestyle-sip.png' },
-  { src: '/assets/hipz-background-flavors.png', mobileSrc: '/assets/hipz-duo-front.png' },
-  { src: '/assets/hipz-hero-wide.png', mobileSrc: '/assets/hipz-duo-back.png' },
-];
+const heroVideo = '/assets/hipz-video.mp4';
 
 function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [backgroundIndex, setBackgroundIndex] = useState(0);
-  const [backgroundPlaying, setBackgroundPlaying] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(true);
+  const [videoMuted, setVideoMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [activeSection, setActiveSection] = useState('accueil');
   const [formFeedback, setFormFeedback] = useState<'success' | 'error' | ''>('');
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -158,21 +157,40 @@ function App() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setBackgroundPlaying(!reduceMotion.matches);
+    if (reduceMotion.matches) {
+      setVideoPlaying(false);
+      if (videoRef.current) videoRef.current.pause();
+    }
     const onMotionPreferenceChange = (event: MediaQueryListEvent) => {
-      if (event.matches) setBackgroundPlaying(false);
+      if (event.matches) {
+        setVideoPlaying(false);
+        if (videoRef.current) videoRef.current.pause();
+      }
     };
     reduceMotion.addEventListener('change', onMotionPreferenceChange);
     return () => reduceMotion.removeEventListener('change', onMotionPreferenceChange);
   }, []);
 
-  useEffect(() => {
-    if (!backgroundPlaying) return;
-    const timer = window.setInterval(() => {
-      setBackgroundIndex((index) => (index + 1) % campaignBackgrounds.length);
-    }, 6000);
-    return () => window.clearInterval(timer);
-  }, [backgroundPlaying]);
+  const toggleVideoPlay = () => {
+    if (!videoRef.current) return;
+    if (videoPlaying) {
+      videoRef.current.pause();
+      setVideoPlaying(false);
+    } else {
+      videoRef.current.play().then(() => {
+        setVideoPlaying(true);
+      }).catch(() => {
+        setVideoPlaying(false);
+      });
+    }
+  };
+
+  const toggleVideoMute = () => {
+    if (!videoRef.current) return;
+    const nextMuted = !videoMuted;
+    videoRef.current.muted = nextMuted;
+    setVideoMuted(nextMuted);
+  };
 
   useEffect(() => {
     const sections = document.querySelectorAll<HTMLElement>('main section[id]');
@@ -210,9 +228,6 @@ function App() {
     validate(event.currentTarget);
   };
 
-  const stepBackground = (direction: number) => {
-    setBackgroundIndex((index) => (index + direction + campaignBackgrounds.length) % campaignBackgrounds.length);
-  };
 
   const navLinks = [
     ['#accueil', t.nav[0]], ['#saveurs', t.nav[1]], ['#univers', t.nav[2]],
@@ -245,19 +260,19 @@ function App() {
 
       <main id="contenu">
         <section className="hero" id="accueil" aria-labelledby="hero-title">
-          <div className="hero-backgrounds" aria-hidden="true">
-            {campaignBackgrounds.map((background, index) => (
-              <div
-                className={`hero-background-slide${backgroundIndex === index ? ' active' : ''}`}
-                key={background.src}
-                style={{ backgroundImage: `url("${background.src}")` }}
-              >
-                <picture>
-                  <source media="(max-width: 760px)" srcSet={background.mobileSrc} />
-                  <img src={background.src} alt="" fetchPriority={index === 0 ? 'high' : undefined} />
-                </picture>
-              </div>
-            ))}
+          <div className="hero-video-bg-container" aria-hidden="true">
+            <video
+              ref={videoRef}
+              className="hero-video-element"
+              autoPlay
+              loop
+              muted={videoMuted}
+              playsInline
+              poster="/assets/hipz-hero-wide.png"
+            >
+              <source src={heroVideo} type="video/mp4" />
+            </video>
+            <div className="hero-video-overlay" />
           </div>
           <div className="hero-copy">
             <div className="eyebrow">{t.heroEyebrow}</div>
@@ -270,22 +285,27 @@ function App() {
             <div className="hero-logo-lockup"><img src={logoImage} alt="" aria-hidden="true" /><span dir="ltr">HIPZ — dima s7ab</span></div>
           </div>
           <div className="hero-background-controls" role="group" aria-label={t.backgroundControls}>
-            <button type="button" onClick={() => stepBackground(rtl ? 1 : -1)} aria-label={t.backgroundPrevious} data-testid="button-background-previous">
-              {rtl ? <ArrowRight size={18} aria-hidden="true" /> : <ArrowLeft size={18} aria-hidden="true" />}
-            </button>
-            <span className="hero-background-count" aria-hidden="true">
-              {String(backgroundIndex + 1).padStart(2, '0')} / {String(campaignBackgrounds.length).padStart(2, '0')}
-            </span>
-            <button type="button" onClick={() => stepBackground(rtl ? -1 : 1)} aria-label={t.backgroundNext} data-testid="button-background-next">
-              {rtl ? <ArrowLeft size={18} aria-hidden="true" /> : <ArrowRight size={18} aria-hidden="true" />}
+            <div className="hero-video-badge" aria-hidden="true">
+              <span className="hero-video-dot" />
+              <span>{t.videoBadge}</span>
+            </div>
+            <button
+              type="button"
+              onClick={toggleVideoPlay}
+              aria-label={videoPlaying ? t.videoPause : t.videoPlay}
+              title={videoPlaying ? t.videoPause : t.videoPlay}
+              data-testid="button-background-toggle"
+            >
+              {videoPlaying ? <Pause size={17} aria-hidden="true" /> : <Play size={17} aria-hidden="true" />}
             </button>
             <button
               type="button"
-              onClick={() => setBackgroundPlaying((playing) => !playing)}
-              aria-label={backgroundPlaying ? t.backgroundPause : t.backgroundPlay}
-              data-testid="button-background-toggle"
+              onClick={toggleVideoMute}
+              aria-label={videoMuted ? t.soundUnmute : t.soundMute}
+              title={videoMuted ? t.soundUnmute : t.soundMute}
+              data-testid="button-background-sound"
             >
-              {backgroundPlaying ? <Pause size={17} aria-hidden="true" /> : <Play size={17} aria-hidden="true" />}
+              {videoMuted ? <VolumeX size={17} aria-hidden="true" /> : <Volume2 size={17} aria-hidden="true" />}
             </button>
           </div>
           <div className="scroll-mark"><ArrowDown size={14} aria-hidden="true" /> {t.scroll}</div>
