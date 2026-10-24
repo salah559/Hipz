@@ -1574,3 +1574,119 @@ body {
     text-align: center;
   }
 }
+
+/* =============================================================
+   REACT BITS & MODERN INTERACTIVE ANIMATIONS
+   ============================================================= */
+
+/* 1. ShinyText (Smooth kinetic light sweep) */
+.shiny-text {
+  display: inline-block;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.4) 20%,
+    #FFFFFF 50%,
+    rgba(255, 255, 255, 0.4) 80%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shiny-sweep 4s linear infinite;
+}
+
+.shiny-text.lemon-sheen {
+  background: linear-gradient(
+    120deg,
+    var(--lemon) 20%,
+    #FFF494 45%,
+    #FFFFFF 55%,
+    var(--peach) 85%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shiny-sweep 3.5s linear infinite;
+}
+
+.shiny-text.disabled {
+  animation: none;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+@keyframes shiny-sweep {
+  0% {
+    background-position: 150% 0;
+  }
+  100% {
+    background-position: -150% 0;
+  }
+}
+
+/* 2. SpotlightCard (Cursor-tracking radial neon aura) */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 360px at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    var(--spotlight-color, rgba(255, 213, 42, 0.2)),
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* 3. BorderBeam (Electric circuit light ray traveling around container perimeter) */
+.border-beam {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: calc(var(--border-width, 1.5) * 1px) solid transparent;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 4;
+}
+
+.border-beam::after {
+  content: "";
+  position: absolute;
+  aspect-ratio: 1;
+  width: calc(var(--size, 260) * 1px);
+  animation: border-beam-anim calc(var(--duration, 8) * 1s) infinite linear;
+  animation-delay: var(--delay, 0s);
+  background: linear-gradient(to left, var(--color-from, #FFD52A), var(--color-to, #FF8243), transparent);
+  offset-path: rect(0 auto auto 0 round 24px);
+}
+
+@keyframes border-beam-anim {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@supports not (offset-path: rect(0 auto auto 0 round 24px)) {
+  .border-beam {
+    border-color: rgba(255, 213, 42, 0.15);
+  }
+  .border-beam::after {
+    display: none;
+  }
+}
+

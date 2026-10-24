@@ -221,6 +221,98 @@ const copy = {
 const logoImage = '/assets/hipz-logo.png';
 const heroVideo = '/assets/hipz-video.mp4';
 
+/* ==============================================================
+   REACT BITS & MODERN ANIMATION COMPONENTS
+   ============================================================== */
+
+interface ShinyTextProps {
+  text: string;
+  className?: string;
+  speed?: number;
+  disabled?: boolean;
+}
+
+function ShinyText({ text, className = '', speed = 3, disabled = false }: ShinyTextProps) {
+  return (
+    <span
+      className={`shiny-text ${disabled ? 'disabled' : ''} ${className}`}
+      style={{ animationDuration: `${speed}s` }}
+    >
+      {text}
+    </span>
+  );
+}
+
+interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  spotlightColor?: string;
+}
+
+function SpotlightCard({
+  children,
+  className = '',
+  spotlightColor = 'rgba(255, 213, 42, 0.18)',
+  ...props
+}: SpotlightCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cardRef.current.style.setProperty('--mouse-x', `${x}px`);
+    cardRef.current.style.setProperty('--mouse-y', `${y}px`);
+    cardRef.current.style.setProperty('--spotlight-color', spotlightColor);
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className={`spotlight-card ${className}`}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
+interface BorderBeamProps {
+  className?: string;
+  size?: number;
+  duration?: number;
+  borderWidth?: number;
+  colorFrom?: string;
+  colorTo?: string;
+  delay?: number;
+}
+
+function BorderBeam({
+  className = '',
+  size = 280,
+  duration = 8,
+  borderWidth = 1.5,
+  colorFrom = '#FFD52A',
+  colorTo = '#FF8243',
+  delay = 0,
+}: BorderBeamProps) {
+  return (
+    <div
+      style={{
+        '--size': size,
+        '--duration': duration,
+        '--border-width': borderWidth,
+        '--color-from': colorFrom,
+        '--color-to': colorTo,
+        '--delay': `-${delay}s`,
+      } as React.CSSProperties}
+      className={`border-beam ${className}`}
+      aria-hidden="true"
+    />
+  );
+}
+
 function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -412,8 +504,12 @@ function App() {
           {/* Pure Cinematic Branding: Only HIPZ.DIMA S7AB. directly over the video, no blurry box */}
           <div className="hero-main-layer">
             <h1 id="hero-title" className="hero-title-cinematic" data-testid="hero-title">
-              <span className="brand-glow-text">HIPZ.</span>
-              <span className="brand-slogan-gradient">DIMA S7AB.</span>
+              <span className="brand-glow-text">
+                <ShinyText text="HIPZ." speed={3.5} />
+              </span>
+              <span className="brand-slogan-gradient">
+                <ShinyText text="DIMA S7AB." className="lemon-sheen" speed={3} />
+              </span>
             </h1>
           </div>
 
@@ -497,7 +593,16 @@ function App() {
           {/* Interactive Dynamic Stage */}
           <div className="flavor-stage-container">
             {activeFlavor === 'lemon' ? (
-              <div className="flavor-spotlight-card lemon animate-fade-in">
+              <SpotlightCard
+                className="flavor-spotlight-card lemon animate-fade-in"
+                spotlightColor="rgba(255, 213, 42, 0.22)"
+              >
+                <BorderBeam
+                  size={280}
+                  duration={7}
+                  colorFrom="#FFD52A"
+                  colorTo="#FFE853"
+                />
                 <div className="spotlight-visual">
                   <div className="halo-glow lemon" />
                   <img
@@ -543,9 +648,18 @@ function App() {
                     {rtl ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
                   </a>
                 </div>
-              </div>
+              </SpotlightCard>
             ) : (
-              <div className="flavor-spotlight-card peach animate-fade-in">
+              <SpotlightCard
+                className="flavor-spotlight-card peach animate-fade-in"
+                spotlightColor="rgba(255, 130, 67, 0.22)"
+              >
+                <BorderBeam
+                  size={280}
+                  duration={7}
+                  colorFrom="#FF8243"
+                  colorTo="#FFAA75"
+                />
                 <div className="spotlight-visual">
                   <div className="halo-glow peach" />
                   <img
@@ -591,7 +705,7 @@ function App() {
                     {rtl ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
                   </a>
                 </div>
-              </div>
+              </SpotlightCard>
             )}
           </div>
         </section>
@@ -605,9 +719,10 @@ function App() {
           </div>
 
           <div className="vibe-cards-grid">
-            <div
+            <SpotlightCard
               className={`vibe-card lemon-vibe${activeFlavor === 'lemon' ? ' selected' : ''}`}
               onClick={() => setActiveFlavor('lemon')}
+              spotlightColor="rgba(255, 213, 42, 0.24)"
             >
               <div className="vibe-card-overlay" />
               <div className="vibe-top-tag">
@@ -617,13 +732,14 @@ function App() {
               <h3>HIPZ LEMON</h3>
               <p>{t.vibeLemonDesc}</p>
               <div className="vibe-action-hint">
-                <span>{activeFlavor === 'lemon' ? '✓ Actif' : 'Activer cette vibe'}</span>
+                <span>{activeFlavor === 'lemon' ? '✓ Actif' : 'Activer هذه الـ Vibe'}</span>
               </div>
-            </div>
+            </SpotlightCard>
 
-            <div
+            <SpotlightCard
               className={`vibe-card peach-vibe${activeFlavor === 'peach' ? ' selected' : ''}`}
               onClick={() => setActiveFlavor('peach')}
+              spotlightColor="rgba(255, 130, 67, 0.24)"
             >
               <div className="vibe-card-overlay" />
               <div className="vibe-top-tag">
@@ -633,9 +749,9 @@ function App() {
               <h3>HIPZ PEACH</h3>
               <p>{t.vibePeachDesc}</p>
               <div className="vibe-action-hint">
-                <span>{activeFlavor === 'peach' ? '✓ Actif' : 'Activer cette vibe'}</span>
+                <span>{activeFlavor === 'peach' ? '✓ Actif' : 'Activer هذه الـ Vibe'}</span>
               </div>
-            </div>
+            </SpotlightCard>
           </div>
         </section>
 
@@ -726,7 +842,8 @@ function App() {
             </div>
 
             {/* Dark Glass Form Card */}
-            <div className="portal-form-card">
+            <SpotlightCard className="portal-form-card" spotlightColor="rgba(255, 213, 42, 0.14)">
+              <BorderBeam size={320} duration={10} colorFrom="#FFD52A" colorTo="#00E676" />
               <form className="contact-form-modern" noValidate onSubmit={handleSubmit}>
                 <div className="form-field-row">
                   <div className="field-modern">
@@ -829,7 +946,7 @@ function App() {
                   {rtl ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
                 </button>
               </form>
-            </div>
+            </SpotlightCard>
           </div>
         </section>
       </main>
