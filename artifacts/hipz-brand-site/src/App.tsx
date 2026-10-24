@@ -6,6 +6,7 @@ import {
   ArrowUp,
   ArrowUpRight,
   CheckCircle2,
+  Flame,
   Mail,
   Menu,
   MessageSquare,
@@ -22,16 +23,19 @@ import {
 import './index.css';
 
 type Language = 'fr' | 'ar';
+type ActiveFlavor = 'lemon' | 'peach';
 
 const copy = {
   fr: {
-    nav: ['Accueil', 'Nos saveurs', "L'univers HIPZ", 'À propos', 'Contact'],
-    heroBadge: 'NOUVELLE GÉNÉRATION DE BOISSONS',
+    nav: ['Accueil', 'Saveurs', 'L’Univers', 'La Vibe', 'Contact'],
+    heroBadge: 'BOISSON PÉTILLANTE DE NOUVELLE GÉNÉRATION',
     heroEyebrow: 'Une vibe à partager',
-    heroSubtitle: 'Deux saveurs explosives. Une seule vibe qui rassemble.',
-    discover: 'Découvrir nos saveurs',
-    universeLink: "L'univers HIPZ",
-    scroll: 'FAITES DÉFILER',
+    heroTitlePart1: 'HIPZ.',
+    heroTitlePart2: 'DIMA S7AB.',
+    heroSubtitle: 'Deux saveurs explosives. Une seule énergie qui rassemble les vrais amis.',
+    discover: 'Découvrir les saveurs',
+    universeLink: 'Explorer l’univers',
+    scroll: 'EXPLORER',
     marquee: [
       '⚡ HIPZ — DIMA S7AB',
       'LEMON ÉNERGIE CITRON',
@@ -43,72 +47,89 @@ const copy = {
     stats: [
       { num: '02', label: 'Saveurs Signatures', desc: 'Citron Zesté & Pêche Veloutée' },
       { num: '100%', label: 'Good Vibes', desc: 'Des moments intenses entre amis' },
-      { num: 'DIMA', label: 'S7ab', desc: 'Une boisson faite pour rassembler' },
-      { num: '24/7', label: 'Rafraîchissement', desc: 'Fraîcheur vive à chaque gorgée' },
+      { num: 'DIMA', label: 'S7ab Toujours', desc: 'Une boisson faite pour rassembler' },
+      { num: '24/7', label: 'Rafraîchissement', desc: 'Une fraîcheur vive à chaque instant' },
     ],
-    flavorKicker: 'À chacun sa vibe',
-    flavorsTitle: 'Deux caractères.',
-    flavorsSubtitle: 'À partager, à choisir, à retrouver. Découvrez les deux créations HIPZ — chacune avec son énergie propre.',
+    flavorKicker: 'LA COLLECTION EXCLUSIVE',
+    flavorsTitle: 'Deux saveurs. Une signature.',
+    flavorsSubtitle: 'Chaque canette HIPZ est une promesse d’intensité, de fraîcheur et d’authenticité.',
     lemonBadge: '⚡ ÉNERGIE CITRON',
-    lemonTitle: "L'énergie du citron.",
-    lemonDescription: 'Une explosion d’agrumes frais, de lumière et de pétillant. Conçu pour réveiller vos sens et donner le rythme à votre journée.',
-    lemonFeatures: ['Pétillant & Rafraîchissant', 'Agrumes solaires sélectionnés', 'Énergie vive & vivifiante'],
-    lemonAlt: 'Visuel de campagne Lemon HIPZ aux agrumes.',
+    lemonTitle: 'Citron Zesté',
+    lemonSubtitle: 'L’énergie pure qui réveille chaque instant.',
+    lemonDescription: 'Un équilibre vibrant entre l’acidité vivifiante du citron solaire et de fines bulles pétillantes. Conçu pour apporter un coup d’éclat immédiat.',
+    lemonSpecs: [
+      { label: 'Intensité', value: 92 },
+      { label: 'Pétillant', value: 95 },
+      { label: 'Fraîcheur', value: 100 },
+    ],
+    lemonFeatures: [
+      'Agrumes solaires sélectionnés avec soin',
+      'Fines bulles ultra-désaltérantes',
+      'Parfait pour les journées actives et festives',
+    ],
     peachBadge: '🍑 DOUCEUR VELOUTÉE',
-    peachTitle: 'La douceur de la pêche.',
-    peachDescription: 'La rondeur de la pêche mûrie au soleil pour des instants de pure douceur à partager ensemble. Un goût irrésistible.',
-    peachFeatures: ['Douceur fruitée naturelle', 'Moments chill entre amis', 'Texture veloutée & délicate'],
-    peachAlt: 'Visuel de campagne Peach HIPZ aux pêches.',
-    flavorButton: 'Commander / Contacter',
-    universeEyebrow: 'L’univers HIPZ',
-    universeTitle: 'Les bons moments sont encore meilleurs entre amis.',
-    universeNote: 'Une expression de campagne, une vibe communautaire.',
-    backgroundControls: 'Commandes du fond vidéo',
-    videoPause: 'Mettre la vidéo en pause',
-    videoPlay: 'Lire la vidéo',
+    peachTitle: 'Pêche Solaire',
+    peachSubtitle: 'La douceur gourmande des couchers de soleil.',
+    peachDescription: 'La générosité et le parfum irrésistible de pêches mûries au soleil. Une texture douce, rafraîchissante et naturellement réconfortante.',
+    peachSpecs: [
+      { label: 'Douceur', value: 98 },
+      { label: 'Arôme', value: 94 },
+      { label: 'Fraîcheur', value: 96 },
+    ],
+    peachFeatures: [
+      'Saveur de pêche mûrie au soleil',
+      'Sensation veloutée et fruitée unique',
+      'L’alliée idéale des moments chill entre amis',
+    ],
+    flavorButton: 'Commander / Devenir Distributeur',
+    vibeTitle: 'Quelle est votre vibe aujourd’hui ?',
+    vibeSubtitle: 'Choisissez votre énergie et découvrez votre boisson idéale.',
+    vibeLemonTag: 'VIBE ÉNERGIE & ACTION',
+    vibeLemonDesc: 'Pour les sessions intenses, les virées en ville et les moments où il faut être au sommet.',
+    vibePeachTag: 'VIBE CHILL & SUNSET',
+    vibePeachDesc: 'Pour les discussions infinies entre amis, les après-midis d’été et la musique au coucher du soleil.',
+    universeEyebrow: 'L’UNIVERS DIMA S7AB',
+    universeTitle: 'Les meilleurs moments sont ceux que l’on partage.',
+    universeText: 'HIPZ n’est pas qu’une boisson : c’est le symbole d’une communauté qui avance ensemble. "Dima S7ab" célèbre l’amitié fidèle, les fous rires spontanés et l’énergie de la jeunesse.',
+    backgroundControls: 'Fond vidéo',
+    videoPause: 'Pause',
+    videoPlay: 'Lecture',
     soundUnmute: 'Activer le son',
     soundMute: 'Couper le son',
     videoBadge: 'VIDÉO OFFICIELLE',
-    aboutEyebrow: 'Notre Histoire',
-    aboutTitle: 'HIPZ, la boisson des moments vrais.',
-    aboutCopy: 'HIPZ est née d’une idée simple : célébrer l’amitié et le partage ("Dima S7ab"). À travers deux saveurs audacieuses, nous accompagnons chaque instant de convivialité, d’énergie et de créativité.',
-    aboutPillars: [
-      { title: 'L’Esprit du Partage', desc: 'Créée pour les groupes d’amis qui célèbrent chaque victoire ensemble.' },
-      { title: 'Ingrédients de Qualité', desc: 'Des arômes fruités intenses pour une sensation de fraîcheur immédiate.' },
-      { title: 'Zéro Compromis', desc: 'Le parfait équilibre entre pétillant, gourmandise et énergie moderne.' },
-    ],
-    placeholderNote: 'Informations officielles de la marque — distribution, partenariats et points de vente à confirmer.',
-    contactEyebrow: 'Partenariats & Contact',
-    contactTitle: 'Donnons du goût à vos projets.',
-    contactCopy: 'Distributeur, commerçant, organisateur ou partenaire ? Contactez notre équipe dès aujourd’hui.',
-    phoneHeading: 'Téléphone direct',
-    socialHeading: 'Communauté sociale',
+    contactEyebrow: 'PARTENARIAT & DISTRIBUTION',
+    contactTitle: 'Rejoignez le mouvement HIPZ.',
+    contactCopy: 'Vous êtes distributeur, gérant de commerce ou partenaire événementiel ? Notre équipe commerciale est à votre écoute pour concrétiser vos projets.',
+    phoneHeading: 'Ligne directe',
+    socialHeading: 'Rejoindre la commu',
     name: 'Nom complet',
-    business: 'Entreprise / Organisation (facultatif)',
+    business: 'Entreprise / Commerce (facultatif)',
     email: 'Adresse e-mail',
     phone: 'Numéro de téléphone (facultatif)',
-    inquiry: 'Objet de la demande',
-    inquiryOptions: ['Choisir un sujet', 'Distribution commerciale', 'Points de vente / Retail', 'Partenariat & Événementiel', 'Autre demande'],
+    inquiry: 'Objet de votre demande',
+    inquiryOptions: ['Choisir un sujet', 'Distribution commerciale', 'Commande en gros / Retail', 'Partenariat & Sponsoring', 'Autre demande'],
     message: 'Votre message',
-    send: 'Envoyer le message',
+    send: 'Envoyer la demande',
     required: 'Ce champ est obligatoire.',
-    invalidEmail: 'Saisissez une adresse e-mail valide.',
-    messageShort: 'Ajoutez un message de 10 caractères minimum.',
-    demoFeedback: 'Message reçu ! Notre équipe commerciale vous répondra dans les plus brefs délais.',
-    demoError: 'Veuillez vérifier les champs indiqués avant d’envoyer.',
-    footerLabel: 'Le goût des moments partagés.',
-    copyright: '© HIPZ — Tous droits réservés. Dima S7ab.',
+    invalidEmail: 'Adresse e-mail invalide.',
+    messageShort: 'Votre message doit contenir au moins 10 caractères.',
+    demoFeedback: 'Votre message a bien été envoyé ! Nous vous répondrons sous 24h.',
+    demoError: 'Veuillez corriger les champs signalés.',
+    footerLabel: 'Le goût des moments vrais.',
+    copyright: '© HIPZ — DIMA S7AB. Tous droits réservés.',
     skip: 'Passer au contenu',
     language: 'العربية',
-    backToTop: 'Haut de page',
+    backToTop: 'Haut',
   },
   ar: {
-    nav: ['الرئيسية', 'نكهاتنا', 'عالم HIPZ', 'من نحن', 'اتصل بنا'],
+    nav: ['الرئيسية', 'النكهات', 'العالم', 'الفايب', 'تواصل معنا'],
     heroBadge: 'الجيل الجديد من المشروبات المنعشة',
     heroEyebrow: 'لحظات تستاهل المشاركة',
-    heroSubtitle: 'نكهتان قويتان. وفايب واحد يجمع الصحاب في كل وقت.',
+    heroTitlePart1: 'HIPZ.',
+    heroTitlePart2: 'DIMA S7AB.',
+    heroSubtitle: 'نكهتان قويتان. وفايب واحد يجمع الصحاب في كل وقت وكل مكان.',
     discover: 'اكتشف النكهات',
-    universeLink: 'عالم HIPZ',
+    universeLink: 'استكشف عالمنا',
     scroll: 'اكتشف المزيد',
     marquee: [
       '⚡ HIPZ — ديما صحاب',
@@ -119,66 +140,81 @@ const copy = {
       'أحلى اللحظات تجمعنا',
     ],
     stats: [
-      { num: '02', label: 'نكهات أيقونية', desc: 'ليمون منعش وخوخ لذيذ' },
-      { num: '100%', label: 'طاقة إيجابية', desc: 'لحظات لا تُنسى مع الصحاب' },
-      { num: 'ديما', label: 'صحاب', desc: 'مشروب خُلق ليجمعنا دائماً' },
-      { num: '24/7', label: 'انتعاش متواصل', desc: 'طعم يروي العطش في كل ثانية' },
+      { num: '02', label: 'نكهات أيقونية', desc: 'ليمون حارق وخوخ ساحر' },
+      { num: '100%', label: 'طاقة ومشاركة', desc: 'لحظات أصيلة تدوم مع الصحاب' },
+      { num: 'ديما', label: 'صحاب على طول', desc: 'مشروب خُلق ليجمعنا دائماً' },
+      { num: '24/7', label: 'انتعاش متواصل', desc: 'يروي العطش في كل ثانية' },
     ],
-    flavorKicker: 'كل واحد وفايبو',
-    flavorsTitle: 'شخصيتان بطعم فريد.',
-    flavorsSubtitle: 'للمشاركة، للاختيار، وللاستمتاع. اكتشف نكهتي HIPZ — كل واحدة بطاقتها وشخصيتها الخاصة.',
+    flavorKicker: 'التشكيلة الحصرية',
+    flavorsTitle: 'نكهتان. شخصية واحدة لا تُنسى.',
+    flavorsSubtitle: 'كل علبة من HIPZ صُممت لتمنحك أقصى درجات الانتعاش والطاقة والمذاق الأصيل.',
     lemonBadge: '⚡ انتعاش الليمون',
-    lemonTitle: 'طاقة وانتعاش الليمون.',
-    lemonDescription: 'انفجار من الليمون المنعش والحيوية الفوارة. صُمم ليوقظ حواسك ويمنحك الطاقة الكافية لبدء يومك بأعلى نشاط.',
-    lemonFeatures: ['انتعاش فوار لا يُقاوم', 'حمضيات طبيعية مختارة بعناية', 'طاقة وحيوية متجددة'],
-    lemonAlt: 'صورة حملة Lemon من HIPZ مع الحمضيات.',
+    lemonTitle: 'ليمون منعش',
+    lemonSubtitle: 'طاقة نقية توقظ حواسك من أول رشفة.',
+    lemonDescription: 'مزيج فوار متوازن بين حموضة الليمون الطبيعي والانتعاش الفوار القوي. صُمم ليمنحك الطاقة القصوى لتعيش يومك بأعلى حيوية.',
+    lemonSpecs: [
+      { label: 'قوة النكهة', value: 92 },
+      { label: 'درجة الفوران', value: 95 },
+      { label: 'مستوى الانتعاش', value: 100 },
+    ],
+    lemonFeatures: [
+      'حمضيات طبيعية منتقاة بعناية فائقة',
+      'فقاعات فوارة خفيفة تروي العطش فوراً',
+      'الرفيق المثالي للأنشطة والرياضة والخرجات',
+    ],
     peachBadge: '🍑 نعومة الخوخ',
-    peachTitle: 'نعومة ولذة الخوخ.',
-    peachDescription: 'حلاوة ونعومة الخوخ الناضج تحت أشعة الشمس لأوقات من الاسترخاء واللذة نتقاسمها معاً. مذاق يسحر القلوب.',
-    peachFeatures: ['مذاق فواكه طبيعي وناعم', 'لحظات رايقة مع الصحاب', 'قوام مخملي ولذيذ'],
-    peachAlt: 'صورة حملة Peach من HIPZ مع الخوخ.',
-    flavorButton: 'اطلب الآن / تواصل معنا',
-    universeEyebrow: 'عالم HIPZ',
+    peachTitle: 'خوخ مشمس',
+    peachSubtitle: 'لذة الفواكه الناضجة في أجواء الغروب.',
+    peachDescription: 'مذاق ساحر يحمل نكهة الخوخ الغنية المنعشة. قوام مخملي ناعم يمنحك لحظات استرخاء رائعة مع أعز الناس.',
+    peachSpecs: [
+      { label: 'حلاوة المذاق', value: 98 },
+      { label: 'الرائحة الزكية', value: 94 },
+      { label: 'مستوى الانتعاش', value: 96 },
+    ],
+    peachFeatures: [
+      'نكهة خوخ طبيعية ناضجة تحت الشمس',
+      'إحساس فاكهي ناعم ومريح',
+      'مثالي للأوقات الهادئة وجلسات الصحاب',
+    ],
+    flavorButton: 'اطلب الآن / كن موزعاً معتمداً',
+    vibeTitle: 'أي نكهة تمثّل فايبك اليوم؟',
+    vibeSubtitle: 'اختر طاقتك المفضلة واستمتع بالمشروب المناسب لك.',
+    vibeLemonTag: 'فايب الحركة والطاقة',
+    vibeLemonDesc: 'للأوقات الحماسية، الخرجات في المدينة، والتحديات اللي تحتاج تركيز ونشاط.',
+    vibePeachTag: 'فايب الروقان والصحبة',
+    vibePeachDesc: 'للجلسات الرايقة مع الصحاب، الغروب، والموسيقى الهادية وأحلى الذكريات.',
+    universeEyebrow: 'عالم ديما صحاب',
     universeTitle: 'أحلى اللحظات دائماً تكمل مع الصحاب.',
-    universeNote: 'عبارة إبداعية ومجتمع يجمع عشاق الانتعاش.',
-    backgroundControls: 'التحكم في فيديو الخلفية',
-    videoPause: 'إيقاف الفيديو مؤقتًا',
-    videoPlay: 'تشغيل الفيديو',
+    universeText: 'HIPZ ليست مجرد مشروب، بل هي روح مجتمع يجمعنا. "ديما صحاب" تحتفي بالصداقة الحقيقية، الضحك العفوي، وشغف الشباب الذي لا ينطفئ.',
+    backgroundControls: 'فيديو الخلفية',
+    videoPause: 'إيقاف مؤقت',
+    videoPlay: 'تشغيل',
     soundUnmute: 'تشغيل الصوت',
     soundMute: 'كتم الصوت',
     videoBadge: 'فيديو رسمي',
-    aboutEyebrow: 'قصتنا',
-    aboutTitle: 'HIPZ، مشروب اللحظات الحقيقية.',
-    aboutCopy: 'انطلقت HIPZ من فكرة بسيطة وملهمة: الاحتفاء بالصداقة والمشاركة الحقيقية ("Dima S7ab"). من خلال نكهتين متميزتين، نرافقكم في كل لحظة تجمع بين الطاقة، الفرح، والإبداع.',
-    aboutPillars: [
-      { title: 'روح المشاركة والصحبة', desc: 'صُنعت لتجمع الأصدقاء في كل مناسبة واحتفال باللحظات الجميلة.' },
-      { title: 'مكونات طبيعية ومنعشة', desc: 'نكهات فواكه مكثفة تمنحك إحساساً فورياً بالحيوية والانتعاش.' },
-      { title: 'طعم حقيقي بدون مساومة', desc: 'توازن مثالي بين الانتعاش الفوار والمذاق العصري اللذيذ.' },
-    ],
-    placeholderNote: 'المعلومات الرسمية للعلامة التجارية — شبكة التوزيع، نقاط البيع، والشراكات المعتمدة.',
-    contactEyebrow: 'تواصل وشراكات',
-    contactTitle: 'لنصنع معاً مشاريع بطعم النجاح.',
-    contactCopy: 'موزع، تاجر تجزئة، منظم فعاليات أو شريك محتمل؟ يسعد فريقنا بالتواصل معكم والإجابة على استفساراتكم.',
-    phoneHeading: 'الهاتف المباشر',
+    contactEyebrow: 'شراكات وتوزيع',
+    contactTitle: 'انضم إلى عائلة HIPZ.',
+    contactCopy: 'هل أنت موزع، صاحب متجر أو منظم فعاليات؟ يسعد فريقنا بالتواصل معكم لبناء شراكة ناجحة.',
+    phoneHeading: 'الاتصال المباشر',
     socialHeading: 'مجتمعنا على التواصل',
     name: 'الاسم الكامل',
-    business: 'الشركة / المؤسسة (اختياري)',
+    business: 'الشركة / المتجر (اختياري)',
     email: 'البريد الإلكتروني',
     phone: 'رقم الهاتف (اختياري)',
-    inquiry: 'موضوع التواصل',
-    inquiryOptions: ['اختر موضوعاً', 'توزيع تجاري', 'نقاط بيع / تجزئة', 'رعاية وفعاليات', 'استفسار آخر'],
+    inquiry: 'موضوع الطلب',
+    inquiryOptions: ['اختر موضوعاً', 'توزيع تجاري', 'طلبات جملة / محلات', 'رعاية وفعاليات', 'استفسار آخر'],
     message: 'رسالتك',
-    send: 'إرسال الرسالة',
+    send: 'إرسال الطلب',
     required: 'هذا الحقل مطلوب.',
-    invalidEmail: 'يرجى إدخال بريد إلكتروني صالح.',
+    invalidEmail: 'البريد الإلكتروني غير صالح.',
     messageShort: 'اكتب رسالة لا تقل عن 10 أحرف.',
-    demoFeedback: 'تم استلام رسالتك بنجاح! سيتواصل معك فريقنا التجاري في أقرب وقت.',
-    demoError: 'يرجى مراجعة الحقول المحددة قبل الإرسال.',
+    demoFeedback: 'تم استلام طلبك بنجاح! سيتواصل معك فريقنا خلال 24 ساعة.',
+    demoError: 'يرجى مراجعة الحقول المشار إليها.',
     footerLabel: 'نكهة اللحظات اللي تجمعنا.',
-    copyright: '© HIPZ — جميع الحقوق محفوظة. ديما صحاب.',
+    copyright: '© HIPZ — ديما صحاب. جميع الحقوق محفوظة.',
     skip: 'انتقل إلى المحتوى',
     language: 'FR',
-    backToTop: 'إلى الأعلى',
+    backToTop: 'الأعلى',
   },
 } as const;
 
@@ -191,10 +227,12 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(true);
   const [videoMuted, setVideoMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [activeFlavor, setActiveFlavor] = useState<ActiveFlavor>('lemon');
   const [activeSection, setActiveSection] = useState('accueil');
   const [formFeedback, setFormFeedback] = useState<'success' | 'error' | ''>('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   const t = copy[lang];
   const rtl = lang === 'ar';
 
@@ -203,23 +241,10 @@ function App() {
     document.documentElement.dir = rtl ? 'rtl' : 'ltr';
     const localizedTitle = rtl ? 'HIPZ — dima s7ab | نكهتان، وفايب واحد' : 'HIPZ — dima s7ab | Deux saveurs. Une seule vibe.';
     document.title = localizedTitle;
-    const ogTitle = document.querySelector<HTMLMetaElement>('meta[property="og:title"]');
-    if (ogTitle) ogTitle.content = localizedTitle;
-    const twitterTitle = document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]');
-    if (twitterTitle) twitterTitle.content = localizedTitle;
-    const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    const localizedDescription = rtl
-      ? 'اكتشف HIPZ — dima s7ab، نكهتا الليمون والخوخ، وفايب يجمع الصحاب.'
-      : 'Découvrez HIPZ — dima s7ab, ses saveurs Lemon et Peach et une vibe à partager.';
-    if (description) description.content = localizedDescription;
-    const ogDescription = document.querySelector<HTMLMetaElement>('meta[property="og:description"]');
-    if (ogDescription) ogDescription.content = localizedDescription;
-    const twitterDescription = document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]');
-    if (twitterDescription) twitterDescription.content = localizedDescription;
   }, [lang, rtl]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -266,7 +291,7 @@ function App() {
     const observer = new IntersectionObserver((entries) => {
       const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (visible) setActiveSection(visible.target.id);
-    }, { rootMargin: '-22% 0px -58% 0px', threshold: [0, .15, .35, .6] });
+    }, { rootMargin: '-20% 0px -60% 0px', threshold: [0, .15, .35, .6] });
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
@@ -301,7 +326,7 @@ function App() {
     ['#accueil', t.nav[0]],
     ['#saveurs', t.nav[1]],
     ['#univers', t.nav[2]],
-    ['#apropos', t.nav[3]],
+    ['#vibe', t.nav[3]],
     ['#contact', t.nav[4]],
   ];
 
@@ -309,7 +334,7 @@ function App() {
     <div className="site-shell">
       <a className="skip-link" href="#contenu" data-testid="link-skip-content">{t.skip}</a>
       
-      {/* Floating Glass Navigation */}
+      {/* 1. FLOATING MINIMALIST LUXURY HEADER */}
       <header className={`site-header${scrolled ? ' scrolled' : ''}`} data-testid="site-header">
         <div className="nav-container">
           <div className="nav-wrap">
@@ -317,7 +342,7 @@ function App() {
               <div className="brand-logo-frame">
                 <img src={logoImage} alt="HIPZ" />
               </div>
-              <span className="brand-tag">DIMA S7AB</span>
+              <span className="brand-tag">HIPZ</span>
             </a>
             
             <button
@@ -339,7 +364,6 @@ function App() {
                   onClick={() => setMenuOpen(false)}
                   key={href}
                   className={`nav-item${activeSection === href.slice(1) ? ' active' : ''}`}
-                  aria-current={activeSection === href.slice(1) ? 'location' : undefined}
                   data-testid={`link-nav-${index}`}
                 >
                   {label}
@@ -355,7 +379,7 @@ function App() {
                   data-testid="button-language"
                 >
                   <span className="lang-indicator" />
-                  {t.language}
+                  <span>{t.language}</span>
                 </button>
                 <a className="nav-cta" href="#contact" onClick={() => setMenuOpen(false)} data-testid="link-nav-contact-cta">
                   <span>{t.nav[4]}</span>
@@ -368,7 +392,7 @@ function App() {
       </header>
 
       <main id="contenu">
-        {/* Hero Section with Video Background */}
+        {/* 2. CINEMATIC EDGE-TO-EDGE VIDEO HERO */}
         <section className="hero" id="accueil" aria-labelledby="hero-title">
           <div className="hero-video-bg-container" aria-hidden="true">
             <video
@@ -383,361 +407,413 @@ function App() {
               <source src={heroVideo} type="video/mp4" />
             </video>
             <div className="hero-video-overlay" />
-            <div className="hero-ambient-glow glow-lemon" />
-            <div className="hero-ambient-glow glow-peach" />
           </div>
 
-          <div className="hero-content-wrap">
-            <div className="hero-copy">
-              <div className="hero-badge">
-                <span className="pulse-dot" />
-                <span>{t.heroBadge}</span>
-              </div>
-              <div className="eyebrow">{t.heroEyebrow}</div>
-              <h1 id="hero-title">
-                <span className="hero-brand-name">HIPZ.</span>
-                <span className="brand-lower" dir="ltr">DIMA S7AB.</span>
-              </h1>
-              <p className="hero-subtitle">{t.heroSubtitle}</p>
-              
-              <div className="hero-actions">
-                <a className="button-primary" href="#saveurs" data-testid="link-hero-flavors">
-                  <span>{t.discover}</span>
-                  {rtl ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
-                </a>
-                <a className="button-outline" href="#univers" data-testid="link-hero-universe">
-                  <Sparkles size={15} />
-                  <span>{t.universeLink}</span>
-                </a>
-              </div>
+          {/* Clean Cinematic Headline - No bulky opaque cards blocking the video! */}
+          <div className="hero-main-layer">
+            <div className="hero-pill-badge">
+              <span className="pulse-dot" />
+              <span>{t.heroBadge}</span>
+            </div>
 
-              <div className="hero-logo-lockup">
-                <img src={logoImage} alt="" aria-hidden="true" />
-                <span dir="ltr">HIPZ — dima s7ab</span>
-              </div>
+            <h1 id="hero-title" className="hero-title-cinematic">
+              <span className="brand-glow-text">HIPZ</span>
+              <span className="brand-slogan-gradient">DIMA S7AB</span>
+            </h1>
+
+            <p className="hero-subtitle-clean">{t.heroSubtitle}</p>
+
+            <div className="hero-action-buttons">
+              <a className="btn-hero-primary" href="#saveurs" data-testid="link-hero-flavors">
+                <span>{t.discover}</span>
+                {rtl ? <ArrowLeft size={17} /> : <ArrowRight size={17} />}
+              </a>
+              <a className="btn-hero-glass" href="#univers" data-testid="link-hero-universe">
+                <Sparkles size={16} />
+                <span>{t.universeLink}</span>
+              </a>
             </div>
           </div>
 
-          {/* Floating Video Controller */}
-          <div className="hero-background-controls" role="group" aria-label={t.backgroundControls}>
-            <div className="hero-video-badge" aria-hidden="true">
-              <span className="hero-video-dot" />
+          {/* Sleek Floating Sound & Video Controls */}
+          <div className="hero-video-controls-capsule" role="group" aria-label={t.backgroundControls}>
+            <div className="video-status-indicator">
+              <span className="status-live-dot" />
               <span>{t.videoBadge}</span>
             </div>
             <button
               type="button"
               onClick={toggleVideoPlay}
               aria-label={videoPlaying ? t.videoPause : t.videoPlay}
-              title={videoPlaying ? t.videoPause : t.videoPlay}
+              className="capsule-btn"
               data-testid="button-background-toggle"
             >
-              {videoPlaying ? <Pause size={17} aria-hidden="true" /> : <Play size={17} aria-hidden="true" />}
+              {videoPlaying ? <Pause size={15} /> : <Play size={15} />}
             </button>
             <button
               type="button"
               onClick={toggleVideoMute}
               aria-label={videoMuted ? t.soundUnmute : t.soundMute}
-              title={videoMuted ? t.soundUnmute : t.soundMute}
+              className="capsule-btn"
               data-testid="button-background-sound"
             >
-              {videoMuted ? <VolumeX size={17} aria-hidden="true" /> : <Volume2 size={17} aria-hidden="true" />}
+              {videoMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
             </button>
           </div>
 
-          <a href="#saveurs" className="scroll-mark" aria-label={t.scroll}>
-            <span className="scroll-mouse"><span className="scroll-wheel" /></span>
+          <a href="#saveurs" className="hero-scroll-prompt" aria-label={t.scroll}>
+            <span className="mouse-frame"><span className="mouse-wheel" /></span>
             <span>{t.scroll}</span>
-            <ArrowDown size={13} aria-hidden="true" />
+            <ArrowDown size={12} />
           </a>
         </section>
 
-        {/* Infinite Moving Brand Ribbon */}
+        {/* 3. ELECTRIC BRAND MARQUEE */}
         <section className="brand-marquee" aria-hidden="true">
           <div className="marquee-track">
             {[...t.marquee, ...t.marquee, ...t.marquee].map((item, idx) => (
               <span key={idx} className="marquee-item">
-                <Zap size={14} className="marquee-icon" />
+                <Zap size={14} className="marquee-sparkle" />
                 <span>{item}</span>
               </span>
             ))}
           </div>
         </section>
 
-        {/* Stats / Highlights Grid */}
-        <section className="stats-section">
-          <div className="stats-grid">
-            {t.stats.map((s, idx) => (
-              <div key={idx} className="stat-card">
-                <div className="stat-top">
-                  <span className="stat-num">{s.num}</span>
-                  <span className="stat-glow" />
-                </div>
-                <h3 className="stat-label">{s.label}</h3>
-                <p className="stat-desc">{s.desc}</p>
-              </div>
-            ))}
+        {/* 4. INTERACTIVE 3D PRODUCT SHOWCASE */}
+        <section className="section flavors-stage-section" id="saveurs" aria-labelledby="flavors-title">
+          <div className="stage-header text-center">
+            <span className="section-kicker-glow">{t.flavorKicker}</span>
+            <h2 className="section-title-stage" id="flavors-title">{t.flavorsTitle}</h2>
+            <p className="section-subtitle-stage">{t.flavorsSubtitle}</p>
+
+            {/* Flavor Interactive Tabs */}
+            <div className="flavor-tabs-nav" role="tablist">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeFlavor === 'lemon'}
+                className={`flavor-tab-btn lemon${activeFlavor === 'lemon' ? ' active' : ''}`}
+                onClick={() => setActiveFlavor('lemon')}
+              >
+                <span className="tab-dot lemon" />
+                <span>{t.lemonTitle}</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeFlavor === 'peach'}
+                className={`flavor-tab-btn peach${activeFlavor === 'peach' ? ' active' : ''}`}
+                onClick={() => setActiveFlavor('peach')}
+              >
+                <span className="tab-dot peach" />
+                <span>{t.peachTitle}</span>
+              </button>
+            </div>
           </div>
-        </section>
 
-        {/* Flavors Section with 3D Showcase Cards */}
-        <section className="section flavors-section" id="saveurs" aria-labelledby="flavors-title">
-          <div className="flavors-intro">
-            <div className="section-badge">{t.flavorKicker}</div>
-            <h2 className="section-title" id="flavors-title">{t.flavorsTitle}</h2>
-            <p className="section-subtitle">{t.flavorsSubtitle}</p>
-          </div>
-
-          <div className="flavor-grid">
-            {/* Lemon Flavor Card */}
-            <article className="flavor-card lemon" data-testid="panel-flavor-lemon">
-              <div className="flavor-card-glow" />
-              <div className="flavor-orbit" aria-hidden="true">
-                <span className="flavor-word">LEMON</span>
-              </div>
-              <div className="flavor-content">
-                <div className="flavor-top">
-                  <span className="flavor-pill">{t.lemonBadge}</span>
-                  <span className="flavor-index">01</span>
+          {/* Interactive Dynamic Stage */}
+          <div className="flavor-stage-container">
+            {activeFlavor === 'lemon' ? (
+              <div className="flavor-spotlight-card lemon animate-fade-in">
+                <div className="spotlight-visual">
+                  <div className="halo-glow lemon" />
+                  <img
+                    src="/assets/hipz-lemon-campaign.png"
+                    alt={t.lemonAlt}
+                    className="can-3d-image"
+                    loading="lazy"
+                  />
+                  <div className="can-reflection" />
                 </div>
-                <h3>{t.lemonTitle}</h3>
-                <p>{t.lemonDescription}</p>
-                
-                <ul className="flavor-feature-list">
-                  {t.lemonFeatures.map((feat, i) => (
-                    <li key={i}>
-                      <CheckCircle2 size={16} />
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
 
-                <div className="flavor-card-actions">
-                  <a className="button-outline flavor-btn" href="#contact" data-testid="link-lemon-contact">
+                <div className="spotlight-info">
+                  <div className="badge-pill lemon">{t.lemonBadge}</div>
+                  <h3 className="spotlight-title">{t.lemonTitle}</h3>
+                  <p className="spotlight-subtitle">{t.lemonSubtitle}</p>
+                  <p className="spotlight-description">{t.lemonDescription}</p>
+
+                  <div className="flavor-meters">
+                    {t.lemonSpecs.map((spec, i) => (
+                      <div key={i} className="meter-row">
+                        <div className="meter-labels">
+                          <span>{spec.label}</span>
+                          <span>{spec.value}%</span>
+                        </div>
+                        <div className="meter-track">
+                          <div className="meter-fill lemon" style={{ width: `${spec.value}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <ul className="spotlight-features">
+                    {t.lemonFeatures.map((feat, i) => (
+                      <li key={i}>
+                        <CheckCircle2 size={16} className="feature-icon lemon" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a href="#contact" className="btn-stage-action lemon">
                     <span>{t.flavorButton}</span>
-                    {rtl ? <ArrowLeft size={15} /> : <ArrowRight size={15} />}
+                    {rtl ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
                   </a>
                 </div>
               </div>
-              <div className="flavor-visual">
-                <div className="flavor-img-backdrop" />
-                <img src="/assets/hipz-lemon-campaign.png" alt={t.lemonAlt} loading="lazy" />
-              </div>
-            </article>
-
-            {/* Peach Flavor Card */}
-            <article className="flavor-card peach" data-testid="panel-flavor-peach">
-              <div className="flavor-card-glow" />
-              <div className="flavor-orbit" aria-hidden="true">
-                <span className="flavor-word">PEACH</span>
-              </div>
-              <div className="flavor-content">
-                <div className="flavor-top">
-                  <span className="flavor-pill">{t.peachBadge}</span>
-                  <span className="flavor-index">02</span>
+            ) : (
+              <div className="flavor-spotlight-card peach animate-fade-in">
+                <div className="spotlight-visual">
+                  <div className="halo-glow peach" />
+                  <img
+                    src="/assets/hipz-peach-campaign.png"
+                    alt={t.peachAlt}
+                    className="can-3d-image"
+                    loading="lazy"
+                  />
+                  <div className="can-reflection" />
                 </div>
-                <h3>{t.peachTitle}</h3>
-                <p>{t.peachDescription}</p>
-                
-                <ul className="flavor-feature-list">
-                  {t.peachFeatures.map((feat, i) => (
-                    <li key={i}>
-                      <CheckCircle2 size={16} />
-                      <span>{feat}</span>
-                    </li>
-                  ))}
-                </ul>
 
-                <div className="flavor-card-actions">
-                  <a className="button-outline flavor-btn" href="#contact" data-testid="link-peach-contact">
+                <div className="spotlight-info">
+                  <div className="badge-pill peach">{t.peachBadge}</div>
+                  <h3 className="spotlight-title">{t.peachTitle}</h3>
+                  <p className="spotlight-subtitle">{t.peachSubtitle}</p>
+                  <p className="spotlight-description">{t.peachDescription}</p>
+
+                  <div className="flavor-meters">
+                    {t.peachSpecs.map((spec, i) => (
+                      <div key={i} className="meter-row">
+                        <div className="meter-labels">
+                          <span>{spec.label}</span>
+                          <span>{spec.value}%</span>
+                        </div>
+                        <div className="meter-track">
+                          <div className="meter-fill peach" style={{ width: `${spec.value}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <ul className="spotlight-features">
+                    {t.peachFeatures.map((feat, i) => (
+                      <li key={i}>
+                        <CheckCircle2 size={16} className="feature-icon peach" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a href="#contact" className="btn-stage-action peach">
                     <span>{t.flavorButton}</span>
-                    {rtl ? <ArrowLeft size={15} /> : <ArrowRight size={15} />}
+                    {rtl ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
                   </a>
                 </div>
               </div>
-              <div className="flavor-visual">
-                <div className="flavor-img-backdrop" />
-                <img src="/assets/hipz-peach-campaign.png" alt={t.peachAlt} loading="lazy" />
-              </div>
-            </article>
+            )}
           </div>
         </section>
 
-        {/* Universe Section */}
-        <section className="universe" id="univers" aria-labelledby="universe-title">
-          <div className="universe-grid">
-            <div className="universe-left">
-              <div className="universe-badge">{t.universeEyebrow}</div>
-              <h2 className="section-title" id="universe-title" dir={rtl ? 'rtl' : undefined}>
-                <span dir="ltr">dima s7ab</span>
+        {/* 5. VIBE MATCHER (Interactive Lifestyle Experience) */}
+        <section className="section vibe-matcher-section" id="vibe">
+          <div className="vibe-header text-center">
+            <span className="section-kicker-glow">LIFESTYLE & ENERGY</span>
+            <h2 className="section-title-stage">{t.vibeTitle}</h2>
+            <p className="section-subtitle-stage">{t.vibeSubtitle}</p>
+          </div>
+
+          <div className="vibe-cards-grid">
+            <div
+              className={`vibe-card lemon-vibe${activeFlavor === 'lemon' ? ' selected' : ''}`}
+              onClick={() => setActiveFlavor('lemon')}
+            >
+              <div className="vibe-card-overlay" />
+              <div className="vibe-top-tag">
+                <Flame size={14} />
+                <span>{t.vibeLemonTag}</span>
+              </div>
+              <h3>HIPZ LEMON</h3>
+              <p>{t.vibeLemonDesc}</p>
+              <div className="vibe-action-hint">
+                <span>{activeFlavor === 'lemon' ? '✓ Actif' : 'Activer cette vibe'}</span>
+              </div>
+            </div>
+
+            <div
+              className={`vibe-card peach-vibe${activeFlavor === 'peach' ? ' selected' : ''}`}
+              onClick={() => setActiveFlavor('peach')}
+            >
+              <div className="vibe-card-overlay" />
+              <div className="vibe-top-tag">
+                <Sparkles size={14} />
+                <span>{t.vibePeachTag}</span>
+              </div>
+              <h3>HIPZ PEACH</h3>
+              <p>{t.vibePeachDesc}</p>
+              <div className="vibe-action-hint">
+                <span>{activeFlavor === 'peach' ? '✓ Actif' : 'Activer cette vibe'}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 6. DIMA S7AB COMMUNITY UNIVERSE */}
+        <section className="section universe-modern-section" id="univers" aria-labelledby="universe-title">
+          <div className="universe-modern-grid">
+            <div className="universe-text-block">
+              <span className="universe-kicker">{t.universeEyebrow}</span>
+              <h2 className="universe-title-modern" id="universe-title">
+                {t.universeTitle}
               </h2>
-              <blockquote className="universe-quote" data-testid="text-campaign-copy">
-                "{t.universeTitle}"
-                <small>{t.universeNote}</small>
-              </blockquote>
+              <p className="universe-body-clean">{t.universeText}</p>
+
+              <div className="stats-strip">
+                {t.stats.map((s, idx) => (
+                  <div key={idx} className="stat-strip-item">
+                    <span className="stat-big-number">{s.num}</span>
+                    <span className="stat-big-label">{s.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="universe-visual-wrap">
-              <div className="universe-image-card">
-                <img src="/assets/hipz-campaign-collage.png" alt="HIPZ Dima S7ab Campaign" loading="lazy" />
-                <div className="universe-card-tag">
-                  <Sparkles size={16} />
-                  <span>DIMA S7AB • 100% VIBE</span>
+            <div className="universe-visual-block">
+              <div className="universe-frame-glow">
+                <img
+                  src="/assets/hipz-campaign-collage.png"
+                  alt="HIPZ Dima S7ab Campaign"
+                  className="universe-image-cinematic"
+                  loading="lazy"
+                />
+                <div className="universe-card-caption">
+                  <span className="pulse-dot green" />
+                  <span>DIMA S7AB • COMMUNAUTÉ OFFICIELLE</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* About Section */}
-        <section className="section about-section" id="apropos" aria-labelledby="about-title">
-          <div className="about-header">
-            <div className="section-badge">{t.aboutEyebrow}</div>
-            <h2 className="section-title" id="about-title">{t.aboutTitle}</h2>
-            <p className="about-main-text">{t.aboutCopy}</p>
-          </div>
+        {/* 7. CONTACT & PARTNERSHIP (Dark Luxury Glass Portal) */}
+        <section className="section contact-portal-section" id="contact" aria-labelledby="contact-title">
+          <div className="contact-portal-grid">
+            <div className="portal-info-panel">
+              <span className="section-kicker-glow">{t.contactEyebrow}</span>
+              <h2 className="portal-title">{t.contactTitle}</h2>
+              <p className="portal-subtitle">{t.contactCopy}</p>
 
-          <div className="about-pillars">
-            {t.aboutPillars.map((pillar, idx) => (
-              <div key={idx} className="about-pillar-card">
-                <span className="pillar-num">0{idx + 1}</span>
-                <h3>{pillar.title}</h3>
-                <p>{pillar.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="draft-note" data-testid="text-official-placeholder">
-            <span>ℹ️</span>
-            <p>{t.placeholderNote}</p>
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section className="section contact-section" id="contact" aria-labelledby="contact-title">
-          <div className="contact-layout">
-            <div className="contact-copy">
-              <div className="contact-badge">{t.contactEyebrow}</div>
-              <h2 className="section-title" id="contact-title">{t.contactTitle}</h2>
-              <p className="contact-intro">{t.contactCopy}</p>
-
-              <div className="contact-details" aria-label={rtl ? 'بيانات التواصل المباشر' : 'Coordonnées directes'}>
-                <div className="contact-detail-group">
-                  <h3>{t.phoneHeading}</h3>
-                  <div className="contact-detail-links">
-                    <a href="tel:0770787889" dir="ltr" data-testid="link-phone-0770787889" className="contact-pill-btn">
+              <div className="portal-contact-links">
+                <div className="portal-group">
+                  <h4>{t.phoneHeading}</h4>
+                  <div className="phone-badges">
+                    <a href="tel:0770787889" dir="ltr" className="portal-pill-btn">
                       <Phone size={14} />
                       <span>0770787889</span>
                     </a>
-                    <a href="tel:0560404339" dir="ltr" data-testid="link-phone-0560404339" className="contact-pill-btn">
+                    <a href="tel:0560404339" dir="ltr" className="portal-pill-btn">
                       <Phone size={14} />
                       <span>0560404339</span>
                     </a>
                   </div>
                 </div>
 
-                <div className="contact-detail-group">
-                  <h3>{t.socialHeading}</h3>
-                  <div className="contact-detail-links">
+                <div className="portal-group">
+                  <h4>{t.socialHeading}</h4>
+                  <div className="social-badges">
                     <a
                       href="https://www.instagram.com/hipzdrink/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="contact-pill-btn social"
-                      aria-label={rtl ? 'حساب HIPZ على Instagram' : 'Instagram — compte HIPZ'}
-                      data-testid="link-instagram"
+                      className="portal-pill-btn social instagram"
                     >
                       <span>Instagram</span>
-                      <ArrowUpRight size={14} aria-hidden="true" />
+                      <ArrowUpRight size={13} />
                     </a>
                     <a
                       href="https://www.tiktok.com/@hipzdrink"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="contact-pill-btn social"
-                      aria-label={rtl ? 'حساب HIPZ على TikTok' : 'TikTok — compte HIPZ'}
-                      data-testid="link-tiktok"
+                      className="portal-pill-btn social tiktok"
                     >
                       <span>TikTok</span>
-                      <ArrowUpRight size={14} aria-hidden="true" />
+                      <ArrowUpRight size={13} />
                     </a>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Modern Glass Form Card */}
-            <div className="contact-form-wrapper">
-              <form className="contact-form" noValidate onSubmit={handleSubmit} data-testid="form-contact">
-                <div className="field">
-                  <label htmlFor="contact-name">
-                    <User size={13} />
-                    <span>{t.name} *</span>
-                  </label>
-                  <input
-                    id="contact-name"
-                    name="name"
-                    autoComplete="name"
-                    placeholder={rtl ? 'اكتب اسمك هنا' : 'Votre nom complet'}
-                    aria-invalid={!!errors.name}
-                    aria-describedby={errors.name ? 'error-name' : undefined}
-                    onChange={() => { if (errors.name) setErrors((old) => ({ ...old, name: '' })); }}
-                    data-testid="input-contact-name"
-                  />
-                  {errors.name && <span className="field-error" id="error-name" role="alert">{errors.name}</span>}
+            {/* Dark Glass Form Card */}
+            <div className="portal-form-card">
+              <form className="contact-form-modern" noValidate onSubmit={handleSubmit}>
+                <div className="form-field-row">
+                  <div className="field-modern">
+                    <label htmlFor="contact-name">
+                      <User size={13} />
+                      <span>{t.name} *</span>
+                    </label>
+                    <input
+                      id="contact-name"
+                      name="name"
+                      autoComplete="name"
+                      placeholder={rtl ? 'اسمك الكريم' : 'Votre nom complet'}
+                      aria-invalid={!!errors.name}
+                      onChange={() => { if (errors.name) setErrors((old) => ({ ...old, name: '' })); }}
+                    />
+                    {errors.name && <span className="field-error-text">{errors.name}</span>}
+                  </div>
+
+                  <div className="field-modern">
+                    <label htmlFor="contact-business">
+                      <span>{t.business}</span>
+                    </label>
+                    <input
+                      id="contact-business"
+                      name="business"
+                      autoComplete="organization"
+                      placeholder={rtl ? 'المتجر أو المؤسسة' : 'Nom de votre établissement'}
+                    />
+                  </div>
                 </div>
 
-                <div className="field">
-                  <label htmlFor="contact-business">
-                    <span>{t.business}</span>
-                  </label>
-                  <input
-                    id="contact-business"
-                    name="business"
-                    autoComplete="organization"
-                    placeholder={rtl ? 'اسم الشركة أو المحل' : 'Nom de votre entreprise'}
-                    data-testid="input-contact-business"
-                  />
+                <div className="form-field-row">
+                  <div className="field-modern">
+                    <label htmlFor="contact-email">
+                      <Mail size={13} />
+                      <span>{t.email} *</span>
+                    </label>
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="contact@exemple.com"
+                      aria-invalid={!!errors.email}
+                      onChange={() => { if (errors.email) setErrors((old) => ({ ...old, email: '' })); }}
+                    />
+                    {errors.email && <span className="field-error-text">{errors.email}</span>}
+                  </div>
+
+                  <div className="field-modern">
+                    <label htmlFor="contact-phone">
+                      <Phone size={13} />
+                      <span>{t.phone}</span>
+                    </label>
+                    <input
+                      id="contact-phone"
+                      name="phone"
+                      type="tel"
+                      autoComplete="tel"
+                      placeholder="05 / 06 / 07 ..."
+                    />
+                  </div>
                 </div>
 
-                <div className="field">
-                  <label htmlFor="contact-email">
-                    <Mail size={13} />
-                    <span>{t.email} *</span>
-                  </label>
-                  <input
-                    id="contact-email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="contact@exemple.com"
-                    aria-invalid={!!errors.email}
-                    aria-describedby={errors.email ? 'error-email' : undefined}
-                    onChange={() => { if (errors.email) setErrors((old) => ({ ...old, email: '' })); }}
-                    data-testid="input-contact-email"
-                  />
-                  {errors.email && <span className="field-error" id="error-email" role="alert">{errors.email}</span>}
-                </div>
-
-                <div className="field">
-                  <label htmlFor="contact-phone">
-                    <Phone size={13} />
-                    <span>{t.phone}</span>
-                  </label>
-                  <input
-                    id="contact-phone"
-                    name="phone"
-                    type="tel"
-                    autoComplete="tel"
-                    placeholder="05 / 06 / 07 ..."
-                    data-testid="input-contact-phone"
-                  />
-                </div>
-
-                <div className="field full">
+                <div className="field-modern full">
                   <label htmlFor="contact-inquiry">
                     <span>{t.inquiry}</span>
                   </label>
-                  <select id="contact-inquiry" name="inquiry" defaultValue="" data-testid="select-contact-inquiry">
+                  <select id="contact-inquiry" name="inquiry" defaultValue="">
                     <option value="">{t.inquiryOptions[0]}</option>
                     {t.inquiryOptions.slice(1).map((option) => (
                       <option key={option} value={option}>{option}</option>
@@ -745,7 +821,7 @@ function App() {
                   </select>
                 </div>
 
-                <div className="field full">
+                <div className="field-modern full">
                   <label htmlFor="contact-message">
                     <MessageSquare size={13} />
                     <span>{t.message} *</span>
@@ -753,27 +829,20 @@ function App() {
                   <textarea
                     id="contact-message"
                     name="message"
-                    placeholder={rtl ? 'اكتب تفاصيل طلبك أو رسالتك هنا...' : 'Écrivez votre message ici...'}
+                    placeholder={rtl ? 'اكتب تفاصيل طلبك أو رسالتك هنا...' : 'Parlez-nous de vos besoins...'}
                     aria-invalid={!!errors.message}
-                    aria-describedby={errors.message ? 'error-message' : undefined}
                     onChange={() => { if (errors.message) setErrors((old) => ({ ...old, message: '' })); }}
-                    data-testid="input-contact-message"
                   />
-                  {errors.message && <span className="field-error" id="error-message" role="alert">{errors.message}</span>}
+                  {errors.message && <span className="field-error-text">{errors.message}</span>}
                 </div>
 
                 {formFeedback && (
-                  <div
-                    className={`form-feedback ${formFeedback}`}
-                    role={formFeedback === 'error' ? 'alert' : 'status'}
-                    aria-live="polite"
-                    data-testid="status-form-feedback"
-                  >
+                  <div className={`portal-feedback ${formFeedback}`} role="status">
                     {formFeedback === 'error' ? t.demoError : t.demoFeedback}
                   </div>
                 )}
 
-                <button className="button-primary form-submit" type="submit" data-testid="button-submit-contact">
+                <button className="btn-portal-submit" type="submit">
                   <span>{t.send}</span>
                   {rtl ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
                 </button>
@@ -783,56 +852,45 @@ function App() {
         </section>
       </main>
 
-      {/* Modern Footer */}
-      <footer className="footer">
-        <div className="footer-main">
-          <div className="footer-brand">
-            <div className="footer-logo">
+      {/* 8. ULTRA-CLEAN OBSIDIAN FOOTER */}
+      <footer className="footer-obsidian">
+        <div className="footer-top-row">
+          <div className="footer-brand-info">
+            <div className="brand-logo-frame mini">
               <img src={logoImage} alt="HIPZ" />
-              <span dir="ltr">HIPZ — dima s7ab</span>
             </div>
-            <p className="footer-motto">{t.heroSubtitle}</p>
+            <span className="footer-brand-title">HIPZ</span>
+            <p className="footer-tagline">{t.heroSubtitle}</p>
           </div>
 
-          <div className="footer-contact" aria-label={rtl ? 'طرق التواصل مع HIPZ' : 'Contacter HIPZ'}>
-            <div>
-              <span>{t.phoneHeading}</span>
-              <a href="tel:0770787889" dir="ltr" data-testid="footer-phone-0770787889">0770787889</a>
-              <a href="tel:0560404339" dir="ltr" data-testid="footer-phone-0560404339">0560404339</a>
-            </div>
-            <div>
-              <span>{t.socialHeading}</span>
-              <a href="https://www.instagram.com/hipzdrink/" target="_blank" rel="noopener noreferrer" data-testid="footer-instagram">Instagram</a>
-              <a href="https://www.tiktok.com/@hipzdrink" target="_blank" rel="noopener noreferrer" data-testid="footer-tiktok">TikTok</a>
-            </div>
-          </div>
-
-          <nav className="footer-links" aria-label={rtl ? 'روابط التذييل' : 'Navigation de pied de page'}>
+          <nav className="footer-links-clean">
             {navLinks.map(([href, label], index) => (
-              <a href={href} key={href} data-testid={`link-footer-${index}`}>{label}</a>
+              <a href={href} key={href}>{label}</a>
             ))}
-            <button className="lang-switch-footer" type="button" onClick={setLanguage} data-testid="button-footer-language">
+            <button className="footer-lang-btn" type="button" onClick={setLanguage}>
               {t.language}
             </button>
           </nav>
         </div>
 
-        <div className="footer-bottom">
+        <div className="footer-divider-line" />
+
+        <div className="footer-bottom-row">
           <span>{t.copyright}</span>
-          <span>{t.footerLabel}</span>
+          <span className="footer-motto-glow">{t.footerLabel}</span>
         </div>
       </footer>
 
-      {/* Floating Back To Top */}
+      {/* 9. FLOATING BACK TO TOP */}
       {scrolled && (
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="back-to-top"
+          className="back-to-top-clean"
           aria-label={t.backToTop}
           title={t.backToTop}
         >
-          <ArrowUp size={18} />
+          <ArrowUp size={16} />
         </button>
       )}
     </div>
