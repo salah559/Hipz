@@ -53,6 +53,7 @@ const copy = {
     flavorKicker: 'LA COLLECTION EXCLUSIVE',
     flavorsTitle: 'Deux saveurs. Une signature.',
     flavorsSubtitle: 'Chaque canette HIPZ est une promesse d’intensité, de fraîcheur et d’authenticité.',
+    interactiveHint: '✦ Expérience 3D interactive • Déplacez le curseur',
     lemonBadge: '⚡ ÉNERGIE CITRON',
     lemonTitle: 'Citron Zesté',
     lemonSubtitle: 'L’énergie pure qui réveille chaque instant.',
@@ -148,6 +149,7 @@ const copy = {
     flavorKicker: 'التشكيلة الحصرية',
     flavorsTitle: 'نكهتان. شخصية واحدة لا تُنسى.',
     flavorsSubtitle: 'كل علبة من HIPZ صُممت لتمنحك أقصى درجات الانتعاش والطاقة والمذاق الأصيل.',
+    interactiveHint: '✦ تجربة تفاعلية 3D • حرّك المؤشر للمعاينة',
     lemonBadge: '⚡ انتعاش الليمون',
     lemonTitle: 'ليمون منعش',
     lemonSubtitle: 'طاقة نقية توقظ حواسك من أول رشفة.',
@@ -220,6 +222,86 @@ const copy = {
 
 const logoImage = '/assets/hipz-logo.png';
 const heroVideo = '/assets/hipz-video.mp4';
+
+interface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  className?: string;
+  maxTilt?: number;
+  scale?: number;
+  perspective?: number;
+}
+
+function TiltCard({
+  children,
+  className = '',
+  maxTilt = 10,
+  scale = 1.02,
+  perspective = 1100,
+  style,
+  ...props
+}: TiltCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState('');
+  const [glare, setGlare] = useState<{ opacity: number; x: number; y: number }>({
+    opacity: 0,
+    x: 50,
+    y: 50,
+  });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = Number((((y - centerY) / centerY) * -maxTilt).toFixed(2));
+    const rotateY = Number((((x - centerX) / centerX) * maxTilt).toFixed(2));
+
+    setTransform(
+      `perspective(${perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${scale}, ${scale}, ${scale})`
+    );
+
+    setGlare({
+      opacity: 0.35,
+      x: Number(((x / rect.width) * 100).toFixed(1)),
+      y: Number(((y / rect.height) * 100).toFixed(1)),
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setTransform(`perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`);
+    setGlare((prev) => ({ ...prev, opacity: 0 }));
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      className={`tilt-card-wrapper ${className}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        ...style,
+        transform,
+        transition: transform ? 'transform 0.08s cubic-bezier(0.22, 1, 0.36, 1)' : 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+        transformStyle: 'preserve-3d',
+      }}
+      {...props}
+    >
+      {children}
+      <div
+        className="tilt-glare-layer"
+        style={{
+          opacity: glare.opacity,
+          background: `radial-gradient(circle 380px at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, 0.45), transparent 75%)`,
+          transition: 'opacity 0.25s ease',
+        }}
+        aria-hidden="true"
+      />
+    </div>
+  );
+}
 
 function App() {
   const [lang, setLang] = useState<Language>('fr');
@@ -468,6 +550,10 @@ function App() {
             <span className="section-kicker-glow">{t.flavorKicker}</span>
             <h2 className="section-title-stage" id="flavors-title">{t.flavorsTitle}</h2>
             <p className="section-subtitle-stage">{t.flavorsSubtitle}</p>
+            <div className="stage-3d-hint">
+              <Sparkles size={13} />
+              <span>{t.interactiveHint}</span>
+            </div>
 
             {/* Flavor Interactive Tabs */}
             <div className="flavor-tabs-nav" role="tablist">
@@ -497,7 +583,7 @@ function App() {
           {/* Interactive Dynamic Stage */}
           <div className="flavor-stage-container">
             {activeFlavor === 'lemon' ? (
-              <div className="flavor-spotlight-card lemon animate-fade-in">
+              <TiltCard className="flavor-spotlight-card lemon animate-fade-in" maxTilt={11} scale={1.02}>
                 <div className="spotlight-visual">
                   <div className="halo-glow lemon" />
                   <img
@@ -543,9 +629,9 @@ function App() {
                     {rtl ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
                   </a>
                 </div>
-              </div>
+              </TiltCard>
             ) : (
-              <div className="flavor-spotlight-card peach animate-fade-in">
+              <TiltCard className="flavor-spotlight-card peach animate-fade-in" maxTilt={11} scale={1.02}>
                 <div className="spotlight-visual">
                   <div className="halo-glow peach" />
                   <img
@@ -591,7 +677,7 @@ function App() {
                     {rtl ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
                   </a>
                 </div>
-              </div>
+              </TiltCard>
             )}
           </div>
         </section>
@@ -605,9 +691,11 @@ function App() {
           </div>
 
           <div className="vibe-cards-grid">
-            <div
+            <TiltCard
               className={`vibe-card lemon-vibe${activeFlavor === 'lemon' ? ' selected' : ''}`}
               onClick={() => setActiveFlavor('lemon')}
+              maxTilt={13}
+              scale={1.03}
             >
               <div className="vibe-card-overlay" />
               <div className="vibe-top-tag">
@@ -619,11 +707,13 @@ function App() {
               <div className="vibe-action-hint">
                 <span>{activeFlavor === 'lemon' ? '✓ Actif' : 'Activer cette vibe'}</span>
               </div>
-            </div>
+            </TiltCard>
 
-            <div
+            <TiltCard
               className={`vibe-card peach-vibe${activeFlavor === 'peach' ? ' selected' : ''}`}
               onClick={() => setActiveFlavor('peach')}
+              maxTilt={13}
+              scale={1.03}
             >
               <div className="vibe-card-overlay" />
               <div className="vibe-top-tag">
@@ -635,7 +725,7 @@ function App() {
               <div className="vibe-action-hint">
                 <span>{activeFlavor === 'peach' ? '✓ Actif' : 'Activer cette vibe'}</span>
               </div>
-            </div>
+            </TiltCard>
           </div>
         </section>
 
