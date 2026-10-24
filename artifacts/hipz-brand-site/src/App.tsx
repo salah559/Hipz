@@ -409,30 +409,12 @@ function App() {
             <div className="hero-video-overlay" />
           </div>
 
-          {/* Clean Cinematic Headline - No bulky opaque cards blocking the video! */}
+          {/* Pure Cinematic Branding: Only HIPZ.DIMA S7AB. directly over the video, no blurry box */}
           <div className="hero-main-layer">
-            <div className="hero-pill-badge">
-              <span className="pulse-dot" />
-              <span>{t.heroBadge}</span>
-            </div>
-
-            <h1 id="hero-title" className="hero-title-cinematic">
-              <span className="brand-glow-text">HIPZ</span>
-              <span className="brand-slogan-gradient">DIMA S7AB</span>
+            <h1 id="hero-title" className="hero-title-cinematic" data-testid="hero-title">
+              <span className="brand-glow-text">HIPZ.</span>
+              <span className="brand-slogan-gradient">DIMA S7AB.</span>
             </h1>
-
-            <p className="hero-subtitle-clean">{t.heroSubtitle}</p>
-
-            <div className="hero-action-buttons">
-              <a className="btn-hero-primary" href="#saveurs" data-testid="link-hero-flavors">
-                <span>{t.discover}</span>
-                {rtl ? <ArrowLeft size={17} /> : <ArrowRight size={17} />}
-              </a>
-              <a className="btn-hero-glass" href="#univers" data-testid="link-hero-universe">
-                <Sparkles size={16} />
-                <span>{t.universeLink}</span>
-              </a>
-            </div>
           </div>
 
           {/* Sleek Floating Sound & Video Controls */}
@@ -877,6 +859,16 @@ function App() {
 
         <div className="footer-bottom-row">
           <span>{t.copyright}</span>
+          <a
+            href="http://novawebdv.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-dev-credit"
+            data-testid="link-novaweb-developer"
+          >
+            <span>developed by</span>
+            <strong className="dev-name">novaweb</strong>
+          </a>
           <span className="footer-motto-glow">{t.footerLabel}</span>
         </div>
       </footer>

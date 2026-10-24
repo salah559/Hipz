@@ -301,75 +301,38 @@ body {
   display: block;
 }
 
-/* Subtle, transparent vignette so the video is fully visible and majestic */
+/* Pure, crisp video visibility - no blur, gentle contrast tint */
 .hero-video-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at center,
-    rgba(8, 10, 7, 0.28) 0%,
-    rgba(8, 10, 7, 0.65) 75%,
-    rgba(8, 10, 7, 0.88) 100%
-  );
+  background: rgba(0, 0, 0, 0.24);
+  pointer-events: none;
   z-index: 1;
 }
 
-/* Clean, transparent typography directly on video without bulky cards */
+/* Clean, transparent typography directly on video without any blurry box */
 .hero-main-layer {
   position: relative;
   z-index: 2;
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.hero-pill-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--lemon);
-  background: rgba(8, 10, 7, 0.6);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 213, 42, 0.35);
-  padding: 8px 18px;
-  border-radius: 99px;
-  margin-bottom: 22px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
-.pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--lemon);
-  box-shadow: 0 0 10px var(--lemon);
-  animation: pulse-glow 2s infinite ease-in-out;
-}
-
-.pulse-dot.green {
-  background: var(--green);
-  box-shadow: 0 0 10px var(--green);
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.8); }
+  justify-content: center;
+  text-align: center;
+  padding: 0 16px;
 }
 
 .hero-title-cinematic {
   font-family: var(--font-display);
-  font-size: clamp(64px, 12vw, 150px);
+  font-size: clamp(64px, 13vw, 160px);
   font-weight: 900;
-  line-height: 0.85;
-  letter-spacing: -0.05em;
-  margin: 0 0 24px;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .hero-title-cinematic span {
@@ -378,16 +341,17 @@ body {
 
 .brand-glow-text {
   color: #FFFFFF;
-  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 12px 48px rgba(0, 0, 0, 0.95);
 }
 
 .brand-slogan-gradient {
-  background: linear-gradient(90deg, var(--lemon) 0%, var(--peach) 100%);
+  background: linear-gradient(90deg, #FFE853 0%, var(--lemon) 35%, var(--peach) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 0.52em;
-  letter-spacing: -0.03em;
-  margin-top: 12px;
+  font-size: clamp(38px, 7.5vw, 92px);
+  letter-spacing: -0.02em;
+  margin-top: 14px;
+  filter: drop-shadow(0 6px 30px rgba(0, 0, 0, 0.85));
 }
 
 .hero-subtitle-clean {
@@ -468,9 +432,8 @@ body {
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  background: rgba(8, 10, 7, 0.65);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(8, 10, 7, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 99px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
@@ -1460,8 +1423,40 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-dev-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.25s ease;
+}
+
+.footer-dev-credit:hover {
+  color: #FFFFFF;
+  border-color: var(--lemon);
+  background: rgba(255, 213, 42, 0.08);
+  box-shadow: 0 0 16px rgba(255, 213, 42, 0.2);
+  transform: translateY(-1px);
+}
+
+.footer-dev-credit .dev-name {
+  color: var(--lemon);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
 }
 
 .footer-motto-glow {
