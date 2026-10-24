@@ -625,27 +625,6 @@ body {
   margin: 0 auto;
 }
 
-.stage-3d-hint {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 6px 16px;
-  border-radius: 99px;
-  margin-top: 16px;
-}
-
-.stage-3d-hint svg {
-  color: var(--lemon);
-  animation: pulse-glow 2s infinite ease-in-out;
-}
-
 /* Flavor Tabs Nav */
 .flavor-tabs-nav {
   display: inline-flex;
@@ -698,25 +677,7 @@ body {
   box-shadow: 0 6px 20px var(--peach-glow);
 }
 
-/* -------------------------------------------------------------
-   3D TILT ENGINE & PARALLAX DEPTH
-   ------------------------------------------------------------- */
-.tilt-card-wrapper {
-  position: relative;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-.tilt-glare-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 12;
-  border-radius: inherit;
-  mix-blend-mode: overlay;
-}
-
-/* Dynamic Spotlight Stage Card with 3D Depth */
+/* Dynamic Spotlight Stage Card */
 .flavor-stage-container {
   max-width: 1100px;
   margin: 0 auto;
@@ -735,12 +696,6 @@ body {
   box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
   position: relative;
   overflow: hidden;
-  transform-style: preserve-3d;
-  cursor: grab;
-}
-
-.flavor-spotlight-card:active {
-  cursor: grabbing;
 }
 
 .flavor-spotlight-card.lemon {
@@ -758,7 +713,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform-style: preserve-3d;
 }
 
 .halo-glow {
@@ -769,8 +723,6 @@ body {
   filter: blur(90px);
   opacity: 0.45;
   pointer-events: none;
-  transform: translateZ(-35px);
-  transition: transform 0.3s ease;
 }
 .halo-glow.lemon { background: var(--lemon); }
 .halo-glow.peach { background: var(--peach); }
@@ -783,13 +735,6 @@ body {
   object-fit: contain;
   filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.6));
   animation: can-float 4.5s ease-in-out infinite;
-  transform: translateZ(65px);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
-}
-
-.flavor-spotlight-card:hover .can-3d-image {
-  transform: translateZ(90px) scale(1.04);
-  filter: drop-shadow(0 40px 55px rgba(0, 0, 0, 0.85));
 }
 
 @keyframes can-float {
@@ -802,15 +747,12 @@ body {
   height: 20px;
   background: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 70%);
   margin-top: 10px;
-  transform: translateZ(10px);
 }
 
 /* Spotlight Info Column */
 .spotlight-info {
   position: relative;
   z-index: 2;
-  transform-style: preserve-3d;
-  transform: translateZ(35px);
 }
 
 .badge-pill {
@@ -824,7 +766,6 @@ body {
   padding: 6px 14px;
   border-radius: 99px;
   margin-bottom: 16px;
-  transform: translateZ(20px);
 }
 
 .badge-pill.lemon {
@@ -993,25 +934,11 @@ body {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: var(--obsidian-card);
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
-  transform-style: preserve-3d;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.vibe-card h3 {
-  transform: translateZ(32px);
-  transition: transform 0.3s ease;
-}
-
-.vibe-card p {
-  transform: translateZ(22px);
-}
-
-.vibe-card .vibe-top-tag {
-  transform: translateZ(26px);
-}
-
-.vibe-card .vibe-action-hint {
-  transform: translateZ(24px);
+.vibe-card:hover {
+  transform: translateY(-6px);
 }
 
 .vibe-card.lemon-vibe {
