@@ -301,11 +301,17 @@ body {
   display: block;
 }
 
-/* Pure, crisp video visibility - no blur, gentle contrast tint */
+/* Pure, crisp video visibility with seamless bottom fade into the marquee */
 .hero-video-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.24);
+  background: linear-gradient(
+    180deg,
+    rgba(8, 10, 7, 0.22) 0%,
+    rgba(8, 10, 7, 0.16) 65%,
+    rgba(8, 10, 7, 0.6) 85%,
+    var(--obsidian) 100%
+  );
   pointer-events: none;
   z-index: 1;
 }
